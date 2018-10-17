@@ -14,26 +14,22 @@ class Admin extends CI_Model{
   }
 
   # Get the admin info
-  public function get($admin_id){
-    $this->db->select("*")
-    ->from("admin")
-    ->where("admin_id",$admin_id);
-    return $this->db->get()->result();
+  public function get($option){
+    return $this->db->get_where("admin", [$option->key => $option->value])->row();
   }
 
   #Getting raw Password
-  private function _getPassword($user_name){
-    $this->db->select("password")
-      ->from("admin")
-      ->where("id",$user_name);
-    return $this->db->get()->row();
+  private function _getPassword($username){
+    $query = $this->db->get_where("admin",["username" => $username, "status" => "active"]);
+    return $query->row();
   }
 
   # Checking Credentials with strong security
-  private function _validateCredentials($user){
-    $credeitial = $this->_getPassword($user->user_name);
-    $password = $this->encrypt->encode($user->password);
-    return $password == $credeitial->password;
+  private function _validateCredentials($credentials){
+    if(empty($credentials->username) || empty($credentials->password)) return false;
+    $password = $this->_getPassword($credentials->username);
+    $saltedPassword = $this->encrypt->encode($credentials->password);
+    return $password == $saltedPassword;
   }
 
   public function isLoggedIn(){
@@ -42,12 +38,34 @@ class Admin extends CI_Model{
 
   public function login($credentials){
     if($this->_validateCredentials($credentials)){
-      $this->session->set_userdata([
-
-      ]);
+      $option = (object)[
+        "key" => "username",
+        "value" => $credentials->username
+      ];
+      $admin = $this->get($option);
+      $adminSession = (object)[
+        "name" => $admin->name,
+        "username" => $admin->username,
+        "type" => $admin->type,
+        "status" => $admin->status,
+        "logged_in" => true,
+        "timeStamp" => date("Y-m-d H:i:s")
+      ];
+      $this->session->set_userdata("adminSession",$adminSession);
+      return (object)[
+        "status" => true,
+        "message" => "Successfully Logged In"
+      ];
+    }else{
+      return (object)[
+        "status" => false,
+        "message" => "Incorrect username or password!"
+      ];
     }
-
   }
 
+  public function sendResetPasswordLink($email_id){
+
+  }
 
 }

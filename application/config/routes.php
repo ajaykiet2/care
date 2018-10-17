@@ -51,7 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 #== Admin Routes ================
-$route['login'] = 'login';
+$route['login'] = 'login/login';
+$route['dashboard'] = 'dashboard';
 $route['admins'] = "admin/admin";
 $route['donees'] = "admin/admin/donees";
 $route['donors'] = "admin/admin/donors";
@@ -65,6 +66,6 @@ $route['admin/ajax/getRevenueCart'] = 'admin/ajax/getRevenueCartData';
 $route['admin/ajax/getAggregationData'] = 'admin/ajax/getAggregationData';
 #============= API Routes ==============
 
-$route['default_controller'] = 'dashboard';
+$route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

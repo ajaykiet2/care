@@ -161,13 +161,18 @@ class Report{
     });
   }
 
+  static numberFormat(value){
+    return Number(value).toLocaleString('en');
+  }
+
   static async initAggregationData(){
-    var response = await this.sendRequest("admin/ajax/getAggregationData",null);
+    let $self = this;
+    let response = await this.sendRequest("admin/ajax/getAggregationData",null);
     if(response.status){
-      $("#aggregation_donees").text(response.data.donees);
-      $("#aggregation_donors").text(response.data.donors);
-      $("#aggregation_transactions").text(response.data.transactions);
-      $("#aggregation_revenue").text(response.data.total_revenue);
+      $("#aggregation_donees").text($self.numberFormat(response.data.donees));
+      $("#aggregation_donors").text($self.numberFormat(response.data.donors));
+      $("#aggregation_transactions").text($self.numberFormat(response.data.transactions));
+      $("#aggregation_revenue").text($self.numberFormat(response.data.total_revenue));
     }
   }
 }

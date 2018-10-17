@@ -19,4 +19,3 @@
 <script src="<?=base_url("assets/js/plugins/chartjs.min.js");?>"></script>
 <script src="<?=base_url("assets/js/plugins/bootstrap-notify.js");?>"></script>
 <script src="<?=base_url("assets/js/now-ui-dashboard.min69ea.js?v=1.1.2");?>" type="text/javascript"></script>
-<!-- <script src="<?=base_url("assets/js/demo.js");?>"></script> -->

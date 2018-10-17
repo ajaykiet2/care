@@ -23,8 +23,8 @@ class Report extends CI_Model{
     return array(
       "donees" => 223,
       "donors" => 5643,
-      "transactions" => 12323,
-      "total_revenue" => 2342243
+      "transactions" => 1323,
+      "total_revenue" => 22243
     );
   }
 }
