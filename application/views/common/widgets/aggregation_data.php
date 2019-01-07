@@ -21,7 +21,7 @@
       <hr>
       <div class="card-footer ">
         <div class="stats">
-          <i class="now-ui-icons arrows-1_refresh-69"></i> Update now
+          Our Active Donees
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <hr>
       <div class="card-footer ">
         <div class="stats">
-          <i class="now-ui-icons ui-1_calendar-60"></i> Last week
+          Customers associated with us
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
       <hr>
       <div class="card-footer ">
         <div class="stats">
-          <i class="now-ui-icons ui-2_time-alarm"></i> In the last hour
+          Total number of transactions
         </div>
       </div>
     </div>
@@ -93,7 +93,7 @@
               </div>
               <div class="col-7 text-right">
                 <h3 class="info-title"><span id="aggregation_revenue">0</span></h3>
-                <h6 class="stats-title">Total Revenue</h6>
+                <h6 class="stats-title">Total Donation</h6>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
       <hr>
       <div class="card-footer ">
         <div class="stats">
-          <i class="now-ui-icons arrows-1_refresh-69"></i> Update now
+           We have collected the amount in rupees
         </div>
       </div>
     </div>

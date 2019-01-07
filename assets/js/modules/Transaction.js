@@ -18,18 +18,8 @@ class Transaction{
   // Loading transactions
   static async loadTransactions($table){
     return await $table.DataTable({
-      serverSide : true,
-      searching : true,
-      ajax:{
-        url: "",
-        data : ()=>{
-          return {};
-        }
-      },
-      columns:[
-        {name : "txn_number", orderable: false},
-        {name : "reference", orderble: true}
-      ]
+      
+      // server side code
     });
   }
 
@@ -42,7 +32,7 @@ class Transaction{
   static async init(){
     // holding the current object
     let $self = this;
-    await $self.loadTransactions($("#transactionTable"));
+    await $self.loadTransactions($("#transactionListing"));
     $self.initEvents();
   }
 }

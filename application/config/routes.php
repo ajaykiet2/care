@@ -50,22 +50,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
-#== Admin Routes ================
+#============= Admin Routes ================
 $route['login'] = 'login/login';
+$route['logout'] = 'login/logout';
+$route['reset-password/(:any)'] = 'login/resetPassword/$1';
 $route['dashboard'] = 'dashboard';
-$route['admins'] = "admin/admin";
-$route['donees'] = "admin/admin/donees";
-$route['donors'] = "admin/admin/donors";
-$route['users'] = "admin/admin/users";
+$route['admins'] = "admin/AdminController";
+$route['donees'] = "admin/AdminController/donees";
+$route['donors'] = "admin/AdminController/donors"; 
+$route['users'] = "admin/AdminController/users";
+$route['transactions'] = "admin/AdminController/transactions";
+$route['about-us'] = "admin/AdminController/companyProfile";
+$route['add_new_donee'] = "admin/AdminController/addDonee";
+$route['update_donee/(:any)'] = "admin/AdminController/updateDonee/$1";
 
-#==============Ajax Requests ============
+#============== Ajax Requests ================
 $route['admin/ajax/getAdmins'] = 'admin/ajax/getAdmins';
 $route['admin/ajax/getDonees'] = 'admin/ajax/getDonees';
+$route['admin/ajax/addDonee'] = 'admin/ajax/addDonee';
 $route['admin/ajax/getDonors'] = 'admin/ajax/getDonors';
+$route['admin/ajax/doneeActions'] = "admin/ajax/doneeActions";
 $route['admin/ajax/getRevenueCart'] = 'admin/ajax/getRevenueCartData';
 $route['admin/ajax/getAggregationData'] = 'admin/ajax/getAggregationData';
+$route['admin/ajax/forgotPassword'] = 'admin/ajax/forgotPassword';
+$route['admin/ajax/resetPassword'] = 'admin/ajax/resetPassword';
+
+#============== API Requests ===================
+$route['api/login']["post"] = 'api/api/login';
+$route['api/requestOTP']["post"] = 'api/api/requestOTP';
+$route['api/addDonor']["post"] = 'api/api/addDonor';
+$route['api/completeTransaction']['post'] = 'api/api/completeTransaction';
+
+
 #============= API Routes ==============
 
 $route['default_controller'] = 'login';
-$route['404_override'] = '';
+$route['404_override'] = 'login/not_found';
 $route['translate_uri_dashes'] = FALSE;

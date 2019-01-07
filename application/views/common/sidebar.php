@@ -13,7 +13,7 @@
       <div class="sidebar-wrapper">
         <div class="user">
           <div class="photo">
-            <img src="<?=base_url("assets/img/james.jpg")?>" />
+            <img src="<?=base_url("assets/img/avatar.png")?>" />
           </div>
           <div class="info">
             <a href="javascript:return false;"><span>Ajay Kumar</span></a>

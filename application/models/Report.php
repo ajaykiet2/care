@@ -24,7 +24,7 @@ class Report extends CI_Model{
       "donees" => 223,
       "donors" => 5643,
       "transactions" => 1323,
-      "total_revenue" => 22243
+      "total_revenue" => 2323345
     );
   }
 }

@@ -34,7 +34,7 @@
                         <i class="now-ui-icons users_circle-08"></i>
                       </div>
                     </span>
-                    <input type="text" class="form-control" placeholder="username" required>
+                    <input type="text" class="form-control" name="username" placeholder="username" required>
                   </div>
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -42,7 +42,7 @@
                         <i class="now-ui-icons objects_key-25"></i>
                       </div>
                     </div>
-                    <input type="password" placeholder="password" class="form-control" required>
+                    <input type="password" name="password" placeholder="password" class="form-control" required>
                   </div>
                   <?php if(isset($response)):?>
                   <h6 class="text-center"><span class="link footer-link text-danger"><?=$response->message;?></span></h6>
@@ -65,13 +65,13 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <div class="input-group no-border">
+                  <div class="input-group">
                     <span class="input-group-prepend">
                       <div class="input-group-text">
                         <i class="now-ui-icons ui-1_email-85"></i>
                       </div>
                     </span>
-                    <input type="text" class="form-control" placeholder="email id" required>
+                    <input type="text" id="resetInput" class="form-control" placeholder="email id" required>
                   </div>
                   <h6 id="resetMessage" class="text-center hide"><span class="link footer-link"></span></h6>
                 </div>

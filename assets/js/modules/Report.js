@@ -85,7 +85,7 @@ class Report{
       data: {
         labels: labels,
         datasets: [{
-          label: "Revenue",
+          label: "Total Donation",
           borderColor: chartColor,
           pointBorderColor: chartColor,
           pointBackgroundColor: "#1e3d60",
@@ -161,18 +161,34 @@ class Report{
     });
   }
 
-  static numberFormat(value){
-    return Number(value).toLocaleString('en');
+  static numberFormat(num, digits) {
+    var si = [
+      { value: 1, symbol: "" },
+      { value: 1E3, symbol: "K" },
+      { value: 1E6, symbol: "M" },
+      { value: 1E9, symbol: "G" },
+      { value: 1E12, symbol: "T" },
+      { value: 1E15, symbol: "P" },
+      { value: 1E18, symbol: "E" }
+    ];
+    var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    var i;
+    for (i = si.length - 1; i > 0; i--) {
+      if (num >= si[i].value) {
+        break;
+      }
+    }
+    return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
   }
 
   static async initAggregationData(){
     let $self = this;
     let response = await this.sendRequest("admin/ajax/getAggregationData",null);
     if(response.status){
-      $("#aggregation_donees").text($self.numberFormat(response.data.donees));
-      $("#aggregation_donors").text($self.numberFormat(response.data.donors));
-      $("#aggregation_transactions").text($self.numberFormat(response.data.transactions));
-      $("#aggregation_revenue").text($self.numberFormat(response.data.total_revenue));
+      $("#aggregation_donees").text($self.numberFormat(response.data.donees,2));
+      $("#aggregation_donors").text($self.numberFormat(response.data.donors,2));
+      $("#aggregation_transactions").text($self.numberFormat(response.data.transactions,2));
+      $("#aggregation_revenue").text($self.numberFormat(response.data.total_revenue,2));
     }
   }
 }

@@ -4,7 +4,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 class MY_Encrypt extends CI_Encrypt
 {
 
-    function encode($string, $key="", $url_safe=true)
+    function encode($string, $key="CAREINDIA456456", $url_safe=true)
     {
         $ret = parent::encode($string, $key);
 
@@ -35,6 +35,6 @@ class MY_Encrypt extends CI_Encrypt
 			)
 		);
 
-        return parent::decode($string, $key);
+        return parent::decode($string, $key="CAREINDIA456456");
     }
 }

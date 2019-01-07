@@ -7,20 +7,20 @@
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title pull-left">LIST OF DONEES</h4>
-					<button class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new donee" data-placement="left">
-              <i class="now-ui-icons ui-1_simple-add"></i>
-          </button>
+					<a href="<?=base_url("add_new_donee")?>" class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new donee" data-placement="left">
+						<i class="now-ui-icons ui-1_simple-add"></i>
+					</a>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-shopping" id="doneeListing">
 							<thead class="">
-								<th >Product</th>
-								<th >	Color</th>
-								<th >Size</th>
-								<th  class="text-right" >	Price</th>
-								<th  class="text-right" >Qty</th>
-								<th  class="text-right" >Amount</th>
+								<th>Name</th>
+								<th>Mobile</th>
+								<th>Email</th>
+								<th>Address</th>
+								<th>Status</th>
+								<th class="text-right">Actions</th>
 							</thead>
 							<tbody></tbody>
 						</table>
@@ -32,6 +32,7 @@
 </div>
 <!--Content End --->
 <?php $this->load->view("common/scripts");?>
+<script src="<?=base_url("assets/js/plugins/jquery.dataTables.min.js");?>"></script>
 <script src="<?=base_url("assets/js/modules/Donee.js");?>"></script>
 <script>
 	$(document).ready(()=>{Donee.init();});

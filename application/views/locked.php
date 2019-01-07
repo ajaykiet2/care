@@ -23,10 +23,8 @@
             <div class="card card-login card-plain text-center">
               <div class="card-header">
                 <div class="logo-container">
-                  <!-- <img src="<?=base_url("assets/img/logo.png");?>" alt=""> -->
                   <img src="../../assets/img/emilyz.jpg" alt="...">
                 </div>
-
               </div>
               <div class="card-body ">
                 <h4 class="card-title">Joe Gardner</h4>
@@ -41,6 +39,10 @@
               </div>
               <div class="card-footer ">
                 <a href="#pablo" class="btn btn-primary btn-round btn-md">Unlock <i class="now-ui-icons ui-1_lock-circle-open"></i></a>
+                <div class="text-center">
+                  <br>
+                  <h6><a href="<?=base_url("logout");?>" class="link footer-link">Signin as different user</span></h6>
+                </div>
               </div>
             </div>
           </div>

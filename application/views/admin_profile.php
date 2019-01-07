@@ -2,24 +2,6 @@
 $this->load->view("common/header");
 $this->load->view("common/sidebar");
 ?>
-
-<div class="content">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div class="row">
     <div class="col-md-8">
       <div class="card">

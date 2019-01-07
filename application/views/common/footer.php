@@ -1,21 +1,21 @@
     <footer class="footer" >
       <div class="container-fluid">
-        <nav>
+        <!-- <nav>
           <ul>
             <li>
-              <a href="#">
+              <a href="<?=base_url("about-us");?>">
                 About Us
               </a>
             </li>
             <li>
-              <a href="#">
-                Blog
+              <a href="<?=base_url("terms-of-use");?>">
+                Terms Of Use
               </a>
             </li>
           </ul>
-        </nav>
+        </nav> -->
         <div class="copyright" id="copyright">
-          &copy; <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>, All Rights Reserved <a href="#" target="_blank">DFRF</a>. Coded by <a href="#" target="_blank">Ajay Kumar</a>.
+          &copy;<?=date("Y");?> All Rights Reserved <a href="#" target="_blank">Care India</a>. Developed by <a href="#" target="_blank">Ajay Kumar</a>.
         </div>
       </div>
     </footer>

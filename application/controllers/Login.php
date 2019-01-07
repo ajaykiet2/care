@@ -7,11 +7,16 @@ class Login extends CI_Controller {
 		$this->load->model(["admin"]);
 	}
 	public function index(){
-		$this->load->view('locked');
+		if($this->admin->isLocked()){
+			$this->load->view("locked");
+		}elseif($this->admin->isLoggedIn()){
+			redirect("/dashboard");
+		}else{
+			$this->load->view('login');
+		}
 	}
 
 	public function login(){
-
 		$username = $this->input->post("username");
 		$password = $this->input->post("password");
 		if(!isset($_POST['logMeIn'])){
@@ -40,15 +45,36 @@ class Login extends CI_Controller {
 		];
 		$response = $this->admin->login($credentials);
 		if($response->status){
-			redirect("/dashboard");
+			$savedUrl = $this->session->userdata("saved_url");
+			redirect($savedUrl);
 		}else{
 			$response->message = "Incorrect Password";
 			$this->load->view("locked",["response" => $response]);
 		}
 	}
 
-	public function resetPassword(){
-		$email_id = $this->input->post("email");
-		$this->admin->sendResetPasswordLink($email_id);
+	public function resetPassword($token){
+		$response = $this->admin->validateToken($token);
+		if($response->status){
+			$this->session->set_userdata("dataToReset", $response);
+			$this->load->view("reset_password",["data" => $response]);
+		}else{
+			$this->load->view("reset_password",["data" => $response]);
+		}
 	}
+	
+	public function logout(){
+		$this->admin->logout();
+		redirect("/");
+	}
+
+	public function not_found(){
+		if($this->admin->isLoggedIn()){
+			$this->session->set_userdata("active_manu","not_found");
+			$this->load->view("not_found");
+		}else{
+			redirect("/");
+		}
+	}
+
 }

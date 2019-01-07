@@ -15,143 +15,13 @@
 					<div class="table-responsive">
 						<table class="table table-shopping" id="donorListing">
 							<thead class="">
-								<th >Product</th>
-								<th >	Color</th>
-								<th >Size</th>
-								<th  class="text-right" >	Price</th>
-								<th  class="text-right" >Qty</th>
-								<th  class="text-right" >Amount</th>
+								<th>Name</th>
+								<th>Mobile</th>
+								<th>Email</th>
+								<th>Address</th>
+								<th>Action</th>
 							</thead>
-							<tbody>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-								<tr>
-									<td class="td-name">Suede Biker Jacket</td>
-									<td>Black</td>
-									<td>M</td>
-									<td class="td-number"><small>€</small>3,390</td>
-									<td class="td-number">1</td>
-									<td class="td-number"><small>€</small>549</td>
-								</tr>
-							</tbody>
+							<tbody></tbody>
 						</table>
 					</div>
 				</div>
@@ -161,6 +31,7 @@
 </div>
 <!--Content End --->
 <?php $this->load->view("common/scripts");?>
+<script src="<?=base_url("assets/js/plugins/jquery.dataTables.min.js");?>"></script>
 <script src="<?=base_url("assets/js/modules/Donor.js");?>"></script>
 <script>
 	$(document).ready(()=>{Donor.init();});

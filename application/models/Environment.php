@@ -10,19 +10,8 @@ class Environment extends CI_Model{
 	public function __construct(){
 		parent::__construct();
 		$this->load->library('session');
-		// $this->load->model(array("permission",'walletAdmin','notification'));
 	}
 
-	// public function get(){
-	// 	$admin_id = $this->encrypt->decode($this->session->userdata('admin_id'));
-	// 	$data = (object)array(
-	// 		'session' => $this->session->userdata(),
-	// 		'permissions' => $this->permission->myPermissions(),
-	// 		'adminInfo' => $this->walletAdmin->get(array('admin_id' => $admin_id)),
-	// 		'notifications' => $this->notification->get(array('conditions' => array("status"=>'unread')))
-	// 	);
-	// 	return $data;
-	// }
 	#Settingup the breadcrumb
 	public function setBreadcrumb($data){
 		$this->session->set_userdata($data);
@@ -87,8 +76,6 @@ class Environment extends CI_Model{
 		array_walk($menus, function(&$menu){
 			$menu->status = ($this->session->userdata('active_manu') == $menu->link) ? "active" : "";
 		});
-		// $myPermissions = $this->permission->myPermissions();
-		// $menus = $this->filterMenues($allMenus,$myPermissions);
 		return $menus;
 	}
 
