@@ -1,5 +1,4 @@
 class Login{
-
   static async sendRequest(url,data){
     return await $.ajax({
       url:url,
@@ -17,7 +16,7 @@ class Login{
 
   static async sendResetRequest(data){
     let $self = this;
-    let url = "/admin/ajax/resetPassword";
+    let url = router.resetPassword;
     let response = await $self.sendRequest(url, data);
     if(response.status){
       swal({
@@ -29,7 +28,7 @@ class Login{
         confirmButtonText: 'Go to login',
         buttonsStyling: false
     }).then(function() {
-      window.location.href = "http://www.care.local/";
+      window.location.href = window.base_url;
     }).catch(swal.noop);
     }else{
       $("#error_message").text(response.message).removeClass("hide");
@@ -87,7 +86,7 @@ class Login{
       }
       $element.text("PLEASE WAIT");
       $element.addClass("disabled");
-      var response = await $self.sendRequest("/admin/ajax/forgotPassword",{email});
+      var response = await $self.sendRequest(router.forgotPassword,{email});
       if(response.status){
         $element.text("Resend");
         $element.removeClass("disabled");

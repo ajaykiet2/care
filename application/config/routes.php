@@ -56,24 +56,28 @@ $route['logout'] = 'login/logout';
 $route['reset-password/(:any)'] = 'login/resetPassword/$1';
 $route['dashboard'] = 'dashboard';
 $route['admins'] = "admin/AdminController";
+$route['admin/profile/(:any)'] = "admin/AdminController/adminProfile/$1";
+$route['donee/profile/(:any)'] = "admin/AdminController/doneeProfile/$1";
 $route['donees'] = "admin/AdminController/donees";
 $route['donors'] = "admin/AdminController/donors"; 
 $route['users'] = "admin/AdminController/users";
 $route['transactions'] = "admin/AdminController/transactions";
 $route['about-us'] = "admin/AdminController/companyProfile";
 $route['add_new_donee'] = "admin/AdminController/addDonee";
-$route['update_donee/(:any)'] = "admin/AdminController/updateDonee/$1";
 
 #============== Ajax Requests ================
 $route['admin/ajax/getAdmins'] = 'admin/ajax/getAdmins';
 $route['admin/ajax/getDonees'] = 'admin/ajax/getDonees';
 $route['admin/ajax/addDonee'] = 'admin/ajax/addDonee';
 $route['admin/ajax/getDonors'] = 'admin/ajax/getDonors';
+$route['admin/ajax/getTransactions'] = 'admin/ajax/getTransactions';
 $route['admin/ajax/doneeActions'] = "admin/ajax/doneeActions";
-$route['admin/ajax/getRevenueCart'] = 'admin/ajax/getRevenueCartData';
+$route['admin/ajax/getRevenueChart'] = 'admin/ajax/getRevenueChartData';
 $route['admin/ajax/getAggregationData'] = 'admin/ajax/getAggregationData';
 $route['admin/ajax/forgotPassword'] = 'admin/ajax/forgotPassword';
 $route['admin/ajax/resetPassword'] = 'admin/ajax/resetPassword';
+$route['admin/ajax/update_admin'] = 'admin/ajax/updateAdmin';
+$route['admin/ajax/update_donee'] = 'admin/ajax/updateDonee';
 
 #============== API Requests ===================
 $route['api/login']["post"] = 'api/api/login';

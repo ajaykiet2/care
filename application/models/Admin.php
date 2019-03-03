@@ -28,7 +28,8 @@ class Admin extends CI_Model{
   private function _validateCredentials($credentials){
     if(empty($credentials->username) || empty($credentials->password)) return false;
     $admin = $this->_getPassword($credentials->username);
-    $decodedPassword = $this->encrypt->decode($admin->password);
+    if(empty($admin)) return false;
+    $decodedPassword = $this->encryption->decrypt($admin->password);
     return $credentials->password == $decodedPassword;
   }
 
@@ -55,10 +56,7 @@ class Admin extends CI_Model{
 
   public function login($credentials){
     if($this->_validateCredentials($credentials)){
-      $option = (object)[
-        "key" => "username",
-        "value" => $credentials->username
-      ];
+      $option = [ "username" => $credentials->username ];
       $admin = $this->get($option);
       $adminSession = (object)[
         "name" => $admin->name,
@@ -83,7 +81,7 @@ class Admin extends CI_Model{
 
   public function sendResetPasswordLink($email_id){
     $admin = $this->get(["email" => $email_id]);
-    $token = $this->encrypt->encode($admin->id.date("Y-m-d H:i:s"));
+    $token = $this->encryption->encrypt($admin->id.date("Y-m-d H:i:s"));
     if($this->update($admin->id,["resetTokens" => $token, "resetTime" => date("Y-m-d H:i:s")])){
       $resetLink = base_url("reset-password/{$token}");
       $emailContents = $this->load->view("emails/reset_password",["resetLink"=>$resetLink], true);
@@ -121,6 +119,43 @@ class Admin extends CI_Model{
     }
   }
 
+  private function _validateParam($key,$value){
+    switch($key){
+      case "name":
+        if(empty($value) || strlen($value) < 3){
+          return "Name must contain at least three characters";
+        }
+      break;
+      case "mobile":
+      if(empty($value) || !is_numeric($value) || strlen($value) != 10){
+        return "Mobile number is not valid";
+      }
+      break;
+      case "email":
+      if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        return "Invalid email format"; 
+      }
+      break;
+      case "address":
+        if(empty($value) || strlen($value) < 10){
+          return "Address must contain at least ten characters";
+        }
+      break;
+      default: return null;
+    }
+  }
+  # Validate the data 
+  public function validateData($params){
+    $errors = [];
+    foreach($params as $key => $value){
+      $validationResponse = $this->_validateParam($key,$value);
+      if(!empty($validationResponse)){
+        array_push($errors,$validationResponse);
+      }
+    }
+    return $errors;
+  }
+
   public function logout(){
     $this->session->sess_destroy();
     return true;
@@ -144,7 +179,7 @@ class Admin extends CI_Model{
     if($this->session->has_userdata("dataToReset")){
       $admin = $this->session->userdata("dataToReset");
       if($admin->resetTokens === $token){
-        $saltedPassword = $this->encrypt->encode($password);
+        $saltedPassword = $this->encryption->encrypt($password);
         $data = ["password" => $saltedPassword, "resetTokens" => "", "resetTime" => ""];
         if($this->update($admin->id,$data)){
           $this->session->unset_userdata('dataToReset');
@@ -171,6 +206,5 @@ class Admin extends CI_Model{
       ];
     }
   }
-
 
 }

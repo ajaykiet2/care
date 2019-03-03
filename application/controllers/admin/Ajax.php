@@ -7,7 +7,7 @@ class Ajax extends CI_Controller {
 	public function __construct(){
 		#calling parent controller
 		parent::__construct();
-		$this->load->model(array('admin','donee',"report","donor"));
+		$this->load->model(array('admin','donee',"report","donor","transaction"));
 		// $this->load->library(array('sms','user_agent'));
 		#loading other modules
 		#--------------
@@ -16,8 +16,8 @@ class Ajax extends CI_Controller {
 		}
 	}
 
-	public function getRevenueCartData(){
-		$data = $this->report->getRevenueCart();
+	public function getRevenueChartData(){
+		$data = $this->report->getRevenueChart();
 		echo json_encode([
 			"status" => true,
 			"message" => "Loaded Successfully",
@@ -38,17 +38,20 @@ class Ajax extends CI_Controller {
     $admins = $this->admin->populate();
     $data = array();
     foreach ($admins as $admin) {
-        $row = array();
-				$row["id"] = $admin->id;
-        $row["name"] = $admin->name;
-        $row["mobile"] = $admin->mobile;
-        $row["email"] = $admin->email;
-        $row["address"] = $admin->address;
-        $row["type"] = $admin->type;
-        $row["action"] = '<div class="pull-right">
-				<a href="'.base_url("admin/profile/").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
-				<button class="btn btn-sm btn-danger btn-round btn-icon" title="Remove Admin"><i class="now-ui-icons ui-1_simple-remove"></i></button></div>';
-        array_push($data, $row);
+			$token = $this->encryption->encrypt($admin->id);
+			$actions = ($this->session->userdata("adminSession")->type == "super_admin") 
+				? '<a href="'.base_url("admin/profile/{$token}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
+				<button class="btn btn-sm btn-danger btn-round btn-icon" title="Remove Admin"><i class="now-ui-icons ui-1_simple-remove"></i></button>'
+				:'N/A'; 
+			$row = array();
+			$row["id"] = $admin->id;
+			$row["name"] = $admin->name;
+			$row["mobile"] = $admin->mobile;
+			$row["email"] = $admin->email;
+			$row["address"] = $admin->address;
+			$row["type"] = $admin->type;
+			$row["action"] = "<div class='pull-right'>{$actions}</div>";
+			array_push($data, $row);
     }
 
     $output = array(
@@ -58,22 +61,56 @@ class Ajax extends CI_Controller {
       "data" => $data,
     );
     echo json_encode($output);
-  }
+	}
+	
+	public function updateAdmin(){
+		$adminID = $this->encryption->decrypt($this->input->post("id"));
+		$data = array(
+			"name" => $this->input->post("name"),
+			"mobile" => $this->input->post("mobile"),
+			"email" => $this->input->post("email"),
+			"address" => $this->input->post("address"),
+			"type" => $this->input->post("type")
+		);
+		$errors = $this->admin->validateData($data);
+		if(!empty($errors)){
+			echo json_encode([
+				'status' => false,
+				'message' => "Validation Failed!",
+				"errors" => $errors
+			]);
+			return;
+		}
+
+		if($this->admin->update($adminID,$data)){
+			echo json_encode([
+				'status' => true,
+				'message' => "Successfully Updated!",
+				"errors" => []
+			]);
+		}else{
+			echo json_encode([
+				'status' => false,
+				'message' => "Unable to update admin information!",
+				"errors" => []
+			]);
+		}
+	}
 
 	public function getDonees(){
     $donees = $this->donee->populate();
     $data = array();
     foreach ($donees as $donee) {
-			$doneeToken = $this->encrypt->encode($donee->donee_id); 
+			$doneeToken = $this->encryption->encrypt($donee->id); 
       $row = array();
-			$row["id"] = $donee->donee_id;
+			$row["id"] = $donee->id;
       $row["name"] = $donee->name;
       $row["mobile"] = $donee->mobile;
       $row["email"] = $donee->email;
       $row["address"] = $donee->address;
       $row["status"] = $donee->status;
       $row["action"] = '<div class="pull-right">
-			<a href="'.base_url("/update_donee/{$doneeToken}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
+			<a href="'.base_url("/donee/profile/{$doneeToken}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
 			<button class="btn btn-sm btn-danger btn-round btn-icon" title="Remove Admin"><i class="now-ui-icons ui-1_simple-remove"></i></button></div>';
       array_push($data, $row);
     }
@@ -108,19 +145,57 @@ class Ajax extends CI_Controller {
 			"mobile" => $mobile,
 			"username" => $username,
 			"email" => $email,
-			"password" => $password,
+			"password" => $this->encryption->encrypt($password),
 			"address" => $address
 		];
 		$response = $this->donee->add($donee);
 		echo json_encode($response);
 	}
-	
+
+	public function updateDonee(){
+		$id= $this->encryption->decrypt($this->input->post("id"));
+		$name = $this->input->post("name");
+		$mobile = $this->input->post("mobile");
+		$email = $this->input->post("email");
+		$address = $this->input->post("address");
+		$status = $this->input->post("status");
+		
+		$donee = (object)[
+			"name" => $name,
+			"mobile" => $mobile,
+			"email" => $email,
+			"address" => $address,
+			"status" => $status
+		];
+		$errors = $this->donee->validateData($donee);
+		if(!empty($errors)){
+			echo json_encode([
+				"status" => false,
+				"message" => "Invalid parameters found!",
+				"errors" => $errors
+			]);
+			return;
+		}
+		if($this->donee->update($id, $donee)){
+			echo json_encode([
+				"status" => true,
+				"message" => "Successfully Updated.",
+				"errors" => []
+			]);
+		}else{
+			echo json_encode([
+				"status" => false,
+				"message" => "Unable to update",
+				"errors" => []
+			]);
+		}
+	}
 	public function getDonors(){
     $donors = $this->donor->populate();
     $data = array();
     foreach ($donors as $donor){
       $row = array();
-			$row["id"] = $donor->donor_id;
+			$row["id"] = $donor->id;
       $row["name"] = $donor->name;
       $row["mobile"] = $donor->mobile;
       $row["email"] = $donor->email;
@@ -141,6 +216,30 @@ class Ajax extends CI_Controller {
     echo json_encode($output);
 	}
 	
+
+	public function getTransactions(){
+		$transactions = $this->transaction->populate();
+    $data = array();
+    foreach ($transactions as $transaction){
+      $row = array();
+			$row["id"] = $transaction->id;
+      $row["donee"] = $transaction->donee;
+      $row["donor"] = $transaction->donor;
+      $row["amount"] = $transaction->amount;	
+      $row["status"] = $transaction->status;
+      $row["transaction_date"] = date("d M Y",strtotime($transaction->transaction_date));
+      array_push($data, $row);
+    }
+
+    $output = array(
+      "draw" => $_POST['draw'],
+      "recordsTotal" => $this->transaction->count_all(),
+      "recordsFiltered" => $this->transaction->count_filtered(),
+      "data" => $data,
+    );
+    echo json_encode($output);
+	}
+
 	#TODO: #FIXME: #FIXME: #FIXME: 
 	public function doneeActions(){
 		$action = $this->input->post("action");

@@ -14,11 +14,11 @@ class Donee extends CI_Model{
   }
 
   # Get the admin info
-  public function get($donee_id){
+  public function get($id){
     $this->db->select("*")
     ->from("donee")
-    ->where("donee_id",$donee_id);
-    return $this->db->get()->result();
+    ->where("id",$id);
+    return $this->db->get()->row();
   }
 
   #Getting raw Password
@@ -115,6 +115,11 @@ class Donee extends CI_Model{
     }
   }
 
+  public function update($id, $data){
+    $this->db->where("id",$id);
+    return $this->db->update("donee",$data);
+  }
+
   public function isUsernameUnique($username){
     $exists = $this->_get(["username" => $username]);
     if(empty($exists)){
@@ -134,6 +139,35 @@ class Donee extends CI_Model{
     }else{
       return $this->generateUsername($name); // Recursive call until unique found
     }
+  }
+
+  private function _validateParam($key,$value){
+    switch($key){
+      case "name":
+        if(empty($value) || strlen($value)< 3) return "Name must have at least 3 characters!";
+      break;
+      case "mobile": 
+        if(empty($value) || !is_numeric($value) || strlen($value) !=10) return "Mobile number is not valid!";
+      break;
+      case "email":
+        if(!filter_var($value,FILTER_VALIDATE_EMAIL))
+          return "Invalid email format!";
+      break;
+      case "address":
+        if(empty($value) || strlen($value)< 10) return "Address must have at least 10 charecters!";
+      break;
+      default:
+      return null;
+    }
+  }
+
+  public function validateData($donee){
+    $errors = [];
+    foreach($donee as $key => $value){
+      $status = $this->_validateParam($key,$value);
+      if(!empty($status)) array_push($errors,$status);
+    }
+    return $errors;
   }
 
 }

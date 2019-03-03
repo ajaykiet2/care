@@ -1,4 +1,5 @@
 <IfModule mod_rewrite.c>
+Deny from 92.53.65.22
 DirectoryIndex index.php
 AddType application/x-httpd-php .htm .html
 	#php_value upload_max_filesize 20M

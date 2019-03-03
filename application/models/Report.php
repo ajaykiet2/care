@@ -2,7 +2,7 @@
 class Report extends CI_Model{
   public function __construct(){}
 
-  public function getRevenueCart(){
+  public function getRevenueChart(){
     return array(
       ["month" => "JAN 2018", "revenue" => "23"],
       ["month" => "FEB 2018", "revenue" => "12"],

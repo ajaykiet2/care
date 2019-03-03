@@ -63,6 +63,7 @@ class CI_Encryption {
 	 * @var	string
 	 */
 	protected $_mode = 'cbc';
+	protected $_method = 'aes-128-gcm';
 
 	/**
 	 * Cipher handle
@@ -368,29 +369,14 @@ class CI_Encryption {
 	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function encrypt($data, array $params = NULL)
-	{
-		if (($params = $this->_get_params($params)) === FALSE)
-		{
-			return FALSE;
-		}
-
-		isset($params['key']) OR $params['key'] = $this->hkdf($this->_key, 'sha512', NULL, self::strlen($this->_key), 'encryption');
-
-		if (($data = $this->{'_'.$this->_driver.'_encrypt'}($data, $params)) === FALSE)
-		{
-			return FALSE;
-		}
-
-		$params['base64'] && $data = base64_encode($data);
-
-		if (isset($params['hmac_digest']))
-		{
-			isset($params['hmac_key']) OR $params['hmac_key'] = $this->hkdf($this->_key, 'sha512', NULL, NULL, 'authentication');
-			return hash_hmac($params['hmac_digest'], $data, $params['hmac_key'], ! $params['base64']).$data;
-		}
-
-		return $data;
+	function encrypt($string){
+		$secret_key = "CareIndia@2019ci";
+		$secret_iv = 'ItsForCare@2019ci';
+		$encrypt_method = "AES-256-CBC";
+		$key = hash( 'sha256', $secret_key );
+		$iv = substr( hash( 'sha256', $secret_iv ), 0, 16 );
+		$output = base64_encode( openssl_encrypt( $string, $encrypt_method, $key, 0, $iv ) );
+		return $output;
 	}
 
 	// --------------------------------------------------------------------
@@ -503,53 +489,14 @@ class CI_Encryption {
 	 * @param	array	$params	Input parameters
 	 * @return	string
 	 */
-	public function decrypt($data, array $params = NULL)
-	{
-		if (($params = $this->_get_params($params)) === FALSE)
-		{
-			return FALSE;
-		}
-
-		if (isset($params['hmac_digest']))
-		{
-			// This might look illogical, but it is done during encryption as well ...
-			// The 'base64' value is effectively an inverted "raw data" parameter
-			$digest_size = ($params['base64'])
-				? $this->_digests[$params['hmac_digest']] * 2
-				: $this->_digests[$params['hmac_digest']];
-
-			if (self::strlen($data) <= $digest_size)
-			{
-				return FALSE;
-			}
-
-			$hmac_input = self::substr($data, 0, $digest_size);
-			$data = self::substr($data, $digest_size);
-
-			isset($params['hmac_key']) OR $params['hmac_key'] = $this->hkdf($this->_key, 'sha512', NULL, NULL, 'authentication');
-			$hmac_check = hash_hmac($params['hmac_digest'], $data, $params['hmac_key'], ! $params['base64']);
-
-			// Time-attack-safe comparison
-			$diff = 0;
-			for ($i = 0; $i < $digest_size; $i++)
-			{
-				$diff |= ord($hmac_input[$i]) ^ ord($hmac_check[$i]);
-			}
-
-			if ($diff !== 0)
-			{
-				return FALSE;
-			}
-		}
-
-		if ($params['base64'])
-		{
-			$data = base64_decode($data);
-		}
-
-		isset($params['key']) OR $params['key'] = $this->hkdf($this->_key, 'sha512', NULL, self::strlen($this->_key), 'encryption');
-
-		return $this->{'_'.$this->_driver.'_decrypt'}($data, $params);
+	function decrypt($string){
+		$secret_key = "CareIndia@2019ci";
+		$secret_iv = 'ItsForCare@2019ci';
+		$encrypt_method = "AES-256-CBC";
+		$key = hash( 'sha256', $secret_key );
+		$iv = substr( hash( 'sha256', $secret_iv ), 0, 16 );
+		$output = openssl_decrypt( base64_decode( $string ), $encrypt_method, $key, 0, $iv );
+		return $output;
 	}
 
 	// --------------------------------------------------------------------

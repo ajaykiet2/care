@@ -6,23 +6,13 @@
 	<?php $this->load->view("common/widgets/aggregation_data");?>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="card">
+			<div class="card card-chart">
 				<div class="card-header">
-					<h4 class="card-title">Transactions</h4>
+					<h5 class="card-category">New Donor Registrations</h5>
 				</div>
 				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table table-shopping" id="transactionListing">
-							<thead class="">
-								<th>Txn#ID</th>
-								<th>Amount</th>
-								<th>Description</th>
-								<th>From</th>
-								<th>Reference</th>
-								<th>TimeStamp</th>
-							</thead>
-							<tbody></tbody>
-						</table>
+					<div class="chart-area">
+					<canvas id="newDonerRegistration"></canvas>
 					</div>
 				</div>
 			</div>
@@ -39,6 +29,7 @@
 $(document).ready(function(){
 	Report.initRevenueChart();
 	Report.initAggregationData();
+	Report.initDonorRegistrationChart();
 	Transaction.init();
 });
 </script>

@@ -2,15 +2,16 @@
 <?php $this->load->view("common/header");?>
 <?php $this->load->view("common/widgets/blank_header");?>
 <div class="content">
-	<?php $this->load->view("common/widgets/aggregation_data");?>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title pull-left">LIST OF ADMINS</h4>
-					<button class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new admin" data-placement="left">
-              <i class="now-ui-icons ui-1_simple-add"></i>
-          </button>
+					<?php if($this->environment->adminSession->type == "super_admin"):?>
+						<button class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new admin" data-placement="left">
+							<i class="now-ui-icons ui-1_simple-add"></i>
+						</button>
+					<?php endif;?>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">

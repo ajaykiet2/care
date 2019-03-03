@@ -13,6 +13,7 @@
   <link href="<?=base_url("assets/css/care.css");?>" rel="stylesheet" />
   <link href="<?=base_url("assets/css/now-ui-dashboard.min69ea.css?v=1.1.2");?>" rel="stylesheet" />
   <?php $imgNum = mt_rand(1, 7);?>
+  <script>window.base_url = '<?=base_url();?>'</script>
 </head>
 <body class="sidebar-mini">
   <div class="wrapper wrapper-full-page ">

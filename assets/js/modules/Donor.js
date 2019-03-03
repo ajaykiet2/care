@@ -4,7 +4,7 @@
  * Author: Ajay Kumar
  ============================================================*/
 
-class Donor{
+class Donor extends Utility{
   static async sendRequest(url,data){
     return await $.ajax({
       url,
@@ -21,13 +21,14 @@ class Donor{
   }
 
   static async loadDonors($target){
+    let self = this;
+    self.blockUI($target,true);
     return await $target.DataTable({
 			"serverSide": true,
-			"processing": true,
 			"iDisplayLength": 10,
 			"searching": true,
 			"ajax": {
-				"url": "admin/ajax/getDonors",
+				"url": router.getDonors,
 				"type": "POST",
 			},
       'createdRow': function( row, data, dataIndex ) {
@@ -41,15 +42,20 @@ class Donor{
 				{ "data": "status" },
 				{ "data": "action","orderable":false }
 			],
-      "order": [[1, 'desc']],
+      "order": [[0, 'asc']],
 			"language": {
 				"paginate": {
-				  "previous": "<i class='fa fa-caret-left'></i>",
-				  "next": "<i class='fa fa-caret-right'></i>"
+				  "previous": "<i class='now-ui-icons arrows-1_minimal-left'></i>",
+				  "next": "<i class='now-ui-icons arrows-1_minimal-right'></i>"
 				},
-				"processing": "<span class='text-danger now-ui-icons education_atom'></span> </br> Loading.."
 			},
-		});
+		}).on("processing.dt",async function (e, settings, processing) {
+      if (processing) {
+        await self.blockUI($target,true);
+      } else {
+        await self.blockUI($target,false);
+      }
+    });
   }
 
   static async addDonor(donor){

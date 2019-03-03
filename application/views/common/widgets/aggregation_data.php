@@ -33,7 +33,7 @@
           <div class="info info-horizontal">
             <div class="row">
               <div class="col-5">
-                <div class="icon icon-warning icon-circle">
+                <div class="icon icon-danger icon-circle">
                   <i class="now-ui-icons users_single-02"></i>
                 </div>
               </div>
@@ -87,7 +87,7 @@
           <div class="info info-horizontal">
             <div class="row">
               <div class="col-5">
-                <div class="icon icon-info icon-circle">
+                <div class="icon icon-danger icon-circle">
                   <i class="now-ui-icons business_money-coins"></i>
                 </div>
               </div>
@@ -102,7 +102,7 @@
       <hr>
       <div class="card-footer ">
         <div class="stats">
-           We have collected the amount in rupees
+           Total donation collected
         </div>
       </div>
     </div>

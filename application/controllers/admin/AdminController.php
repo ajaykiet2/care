@@ -5,15 +5,23 @@ class AdminController extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model(["environment","admin","donee","donor"]);
-		// if(!$this->admin->isLoggedIn()){
-		// 	redirect('/', 'refresh');
-		// 	return;
-		// }
+		if(!$this->admin->isLoggedIn()){
+			redirect('/', 'refresh');
+			return;
+		}
 	}
 
 	public function index(){
 		$this->session->set_userdata("active_manu","admins");
 		$this->load->view('admin_listing');
+	}
+
+	public function adminProfile($token){
+		$adminId = $this->encryption->decrypt($token);
+		$this->session->set_userdata("active_manu","admins");
+		$option = [ "id" => $adminId ];
+		$admin = $this->admin->get($option);
+		$this->load->view("admin_profile",["admin"=>$admin]);
 	}
 
   public function donees(){
@@ -44,7 +52,7 @@ class AdminController extends CI_Controller {
 		$param_id = $this->input->get("id");
 		# Update Donee Profile
 		if(!empty($param_id)){
-			$donee_id = $this->encrypt->decode($param_id);
+			$donee_id = $this->encryption->decrypt($param_id);
 			$donee = $this->donee->get($donee_id);
 			$this->load->view("new_donee",$donee);
 		}else{
@@ -53,9 +61,10 @@ class AdminController extends CI_Controller {
 		}
 	}
 
-	public function updateDonee($token){
-		$donee_id = $this->encrypt->decode($token);
-		$donee = $this->donee->get($donee_id);		
-		$this->load->view("new_donee",["donee" => $donee]);
+	public function doneeProfile($token){
+		$id = $this->encryption->decrypt($token);
+		$this->session->set_userdata("active_manu","donees");
+		$donee = $this->donee->get($id);
+		$this->load->view("donee_profile",["donee"=>$donee]);
 	}
 }

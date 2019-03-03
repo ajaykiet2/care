@@ -1,12 +1,17 @@
 <?php
 require_once("Datatable.php");
 class Transaction extends CI_Model{
-  use Datatable;
-  var $table = '(SELECT transaction.*, donor.name FROM transaction
-  INNER JOIN donor USING(donor_id))tempTable';
-  var $column_order = array('name','mobile','email','address','status','created_date');
-  var $column_search = array('name','mobile','email','address','status');
-  var $order = array('name' => 'asc');
+  use Datatable; 
+  var $table = '(SELECT 
+    txn.*, 
+    donor.name as donor, 
+    donee.name as donee 
+  FROM transaction txn 
+  LEFT JOIN donor ON txn.donor_id = donor.id 
+  LEFT JOIN donee ON txn.donee_id = donee.id)tempTable';
+  var $column_order = array('id','donee','donor','amount','status','transaction_date');
+  var $column_search = array('donee','donor');
+  var $order = array('id' => 'desc');
 
   public function __construct(){
     parent::__construct();

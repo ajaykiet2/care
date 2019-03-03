@@ -4,7 +4,7 @@
  * Author: Ajay Kumar
  ============================================================*/
 
-class Donee {
+class Donee extends Utility{
 	static async sendRequest(url, data) {
 		return await $.ajax({
 			url,
@@ -24,55 +24,87 @@ class Donee {
 	}
 
 	static async loadDonees($target) {
+		let self = this;
+		self.blockUI($target,true);
 		return await $target.DataTable({
 			"serverSide": true,
-			"processing": true,
 			"iDisplayLength": 10,
 			"searching": true,
 			"ajax": {
-				"url": "admin/ajax/getDonees",
+				"url": router.getDonees,
 				"type": "POST",
 			},
 			'createdRow': function (row, data, dataIndex) {
 				$(row).data('id', data.id);
 			},
-			"columns": [{
-					"data": "name"
-				},
-				{
-					"data": "mobile"
-				},
-				{
-					"data": "email"
-				},
-				{
-					"data": "address"
-				},
-				{
-					"data": "status"
-				},
-				{
-					"data": "action",
-					"orderable": false
-				}
+			"columns": [
+				{ "data": "name" },
+				{ "data": "mobile" },
+				{ "data": "email" },
+				{ "data": "address" },
+				{ "data": "status" },
+				{ "data": "action", "orderable": false }
 			],
 			"order": [
-				[1, 'desc']
+				[0, 'asc']
 			],
 			"language": {
 				"paginate": {
-					"previous": "<i class='fa fa-caret-left'></i>",
-					"next": "<i class='fa fa-caret-right'></i>"
+				  "previous": "<i class='now-ui-icons arrows-1_minimal-left'></i>",
+				  "next": "<i class='now-ui-icons arrows-1_minimal-right'></i>"
 				},
-				"processing": "<span class='text-danger now-ui-icons education_atom'></span> </br> Loading.."
 			},
+		}).on("processing.dt",async function (e, settings, processing) {
+			if (processing) {
+				self.blockUI($target,true);
+			} else {
+				self.blockUI($target,false);
+			}
 		});
 	}
 
 	static async addDonee(donee) {
-		// FIXME:
+		// TODO:
 		let $self = this;
 		return await $self.sendRequest(window.env.adminUri, admin);
+	}
+
+	static async updateDonee(donee){
+		let self = this;
+		let response = await self.sendRequest(router.update_donee,donee);
+		if(response.status){
+			swal({
+        title: "Success!",
+        html: response.message,
+        buttonsStyling: false,
+        confirmButtonClass: "btn btn-success",
+        type: "success"
+      });
+		}else{
+			swal({
+        title: "Oops!",
+        html: response.message+"<br>"+response.errors.join("<br>"),
+        buttonsStyling: false,
+        confirmButtonClass: "btn btn-danger",
+        type: "error"
+      });
+		}
+	}
+
+	static async initProfile(){
+		let self = this;
+		$("#updateDonee").click(()=>{
+			let donee = {
+				id : $("#doneeInfo #id").val(),
+				name : $("#doneeInfo #name").val(),
+				status : $("#doneeInfo #status").val(),
+				mobile : $("#doneeInfo #mobile").val(),
+				email : $("#doneeInfo #email").val(),
+				address : $("#doneeInfo #address").val()
+			};
+			self.updateDonee(donee);
+		});
+		
 	}
 
 	static async bindEvents() {

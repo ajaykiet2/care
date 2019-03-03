@@ -1,21 +1,7 @@
-    <footer class="footer" >
+    <footer class="footer" style="background: linear-gradient(90deg,#ff3636 0,#ffb236 60%,#f96332);">
       <div class="container-fluid">
-        <!-- <nav>
-          <ul>
-            <li>
-              <a href="<?=base_url("about-us");?>">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a href="<?=base_url("terms-of-use");?>">
-                Terms Of Use
-              </a>
-            </li>
-          </ul>
-        </nav> -->
         <div class="copyright" id="copyright">
-          &copy;<?=date("Y");?> All Rights Reserved <a href="#" target="_blank">Care India</a>. Developed by <a href="#" target="_blank">Ajay Kumar</a>.
+          &copy;<?=date("Y");?> All Rights Reserved <a href="" class="text-white">Care India</a>. Developed by <a href="#" class="text-white">Ajay Kumar</a>
         </div>
       </div>
     </footer>

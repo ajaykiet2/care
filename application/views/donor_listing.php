@@ -19,7 +19,8 @@
 								<th>Mobile</th>
 								<th>Email</th>
 								<th>Address</th>
-								<th>Action</th>
+								<th>Status</th> 
+								<th>Action</th> 
 							</thead>
 							<tbody></tbody>
 						</table>

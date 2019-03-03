@@ -1,1 +1,16 @@
 .hide{display:none!important;}.show{display:block!important;}.link{cursor: pointer!important;}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid inherit!important;
+  -webkit-text-fill-color: #f96332!important;
+  box-shadow: none!important;
+  -webkit-box-shadow: none!important;
+  transition: background-color 5000s ease-in-out 0s;
+}

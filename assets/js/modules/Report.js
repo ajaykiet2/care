@@ -5,65 +5,70 @@ class Report{
       data : data,
       type : "post",
       dataType: "json",
-      success : (response) => {
-        return response;
-      },
-      error : ()=>{
-        return {status:false, message: "Unable to connect server!"};
-      }
+      success : (response) => { return response; },
+      error : ()=>{ return {status:false, message: "Unable to connect server!"}; }
     });
+  }
+  static async initDonorRegistrationChart(){
+    let e = document.getElementById("newDonerRegistration").getContext("2d");
+    let gradientFill = e.createLinearGradient(0, 0, 0, 100);
+    gradientFill.addColorStop(0, "rgba(255, 0, 0, 1)");
+    gradientFill.addColorStop(1, "rgba(255, 150, 0, 1)");
+
+    let a =  {
+      type : "bar",
+      data : {
+        labels : ["January","February","March","April","May","June","July","August","September","October","November","December"],
+        datasets: [{
+          label: "New Registrations",
+          backgroundColor: gradientFill,
+          data: [80,99,86,96,123,85,100,75,88,90,123,155]
+        }]
+      },
+      options: {
+          maintainAspectRatio: false,
+          legend: { display: false },
+          tooltips: {
+            bodySpacing: 4,
+            mode:"nearest",
+            intersect: 0,
+            position:"nearest",
+            xPadding:10,
+            yPadding:10,
+            caretPadding:10
+          },  
+          responsive: true,
+          scales: {
+              yAxes: [{
+                gridLines:0,
+                gridLines: { zeroLineColor: "transparent", drawBorder: false }
+              }],
+              xAxes: [{
+                display:true,
+                gridLines:0,
+                ticks: {
+                  padding: 10,
+                  fontColor: "rgba(100,100,100,1)",
+                  fontStyle: "bold"
+                },
+                gridLines: {
+                  zeroLineColor: "transparent",
+                  drawTicks: false,
+                  display: false,
+                  drawBorder: false
+                }
+              }]
+          },
+          layout:{
+            padding:{left:0,right:0,top:15,bottom:15}
+          }
+        }
+      };
+      new Chart(e,a);
   }
 
   static async initRevenueChart(){
     var chartColor = "#FFFFFF";
-    var gradientChartOptionsConfiguration = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-      tooltips: {
-        bodySpacing: 4,
-        mode:"nearest",
-        intersect: 0,
-        position:"nearest",
-        xPadding:10,
-        yPadding:10,
-        caretPadding:10
-      },
-      responsive: 1,
-      scales: {
-        yAxes: [{
-          display:0,
-          gridLines:0,
-          ticks: {
-            display: false
-          },
-          gridLines: {
-            zeroLineColor: "transparent",
-            drawTicks: false,
-            display: false,
-            drawBorder: false
-          }
-        }],
-        xAxes: [{
-          display:0,
-          gridLines:0,
-          ticks: {
-            display: false
-          },
-          gridLines: {
-            zeroLineColor: "transparent",
-            drawTicks: false,
-            display: false,
-            drawBorder: false
-          }
-        }]
-      },
-      layout:{
-        padding:{left:0,right:0,top:15,bottom:15}
-      }
-    };
-
     var ctx = document.getElementById('bigDashboardChart').getContext("2d");
 
     var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
@@ -71,16 +76,16 @@ class Report{
     gradientStroke.addColorStop(1, chartColor);
 
     var gradientFill = ctx.createLinearGradient(0, 200, 0, 50);
-    gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-    gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
-    var response = await this.sendRequest("admin/ajax/getRevenueCart",null);
+    gradientFill.addColorStop(0, "rgba(204, 0, 0, 0)");
+    gradientFill.addColorStop(1, "rgba(204, 0, 0, 0.6)");
+    var response = await this.sendRequest(router.getRevenueChart,null);
     var labels = [];
     var data = [];
     response.data.forEach((dataRow,idx)=>{
       labels.push(dataRow.month);
       data.push(dataRow.revenue);
     });
-    var myChart = new Chart(ctx, {
+    new Chart(ctx, {
       type: 'line',
       data: {
         labels: labels,
@@ -88,8 +93,8 @@ class Report{
           label: "Total Donation",
           borderColor: chartColor,
           pointBorderColor: chartColor,
-          pointBackgroundColor: "#1e3d60",
-          pointHoverBackgroundColor: "#1e3d60",
+          pointBackgroundColor: "#ff5923",
+          pointHoverBackgroundColor: "#ff5923",
           pointHoverBorderColor: chartColor,
           pointBorderWidth: 1,
           pointHoverRadius: 7,
@@ -113,8 +118,8 @@ class Report{
         maintainAspectRatio: false,
         tooltips: {
           backgroundColor: '#fff',
-          titleFontColor: '#333',
-          bodyFontColor: '#666',
+          titleFontColor: '#ff5923',
+          bodyFontColor: '#444',
           bodySpacing: 4,
           xPadding: 12,
           mode: "nearest",
@@ -129,7 +134,7 @@ class Report{
         scales: {
           yAxes: [{
             ticks: {
-              fontColor: "rgba(255,255,255,0.4)",
+              fontColor: "rgba(255,255,255,1)",
               fontStyle: "bold",
               beginAtZero: true,
               maxTicksLimit: 5,
@@ -139,7 +144,7 @@ class Report{
               drawTicks: true,
               drawBorder: false,
               display: true,
-              color: "rgba(255,255,255,0.1)",
+              color: "rgba(255,255,255,0.2)",
               zeroLineColor: "transparent"
             }
 
@@ -152,7 +157,7 @@ class Report{
             },
             ticks: {
               padding: 10,
-              fontColor: "rgba(255,255,255,0.4)",
+              fontColor: "rgba(255,255,255,1)",
               fontStyle: "bold"
             }
           }]
@@ -183,7 +188,7 @@ class Report{
 
   static async initAggregationData(){
     let $self = this;
-    let response = await this.sendRequest("admin/ajax/getAggregationData",null);
+    let response = await this.sendRequest(router.getAggregationData,null);
     if(response.status){
       $("#aggregation_donees").text($self.numberFormat(response.data.donees,2));
       $("#aggregation_donors").text($self.numberFormat(response.data.donors,2));
