@@ -170,4 +170,13 @@ class Donee extends CI_Model{
     return $errors;
   }
 
+  public function getAll($params){
+    if(!empty($params)){
+      foreach($params as $col => $val){
+        $this->db->where($col,$val);
+      }
+    }
+    return $this->db->get("donee")->result();
+  }
+
 }

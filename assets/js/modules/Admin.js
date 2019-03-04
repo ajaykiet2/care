@@ -37,7 +37,6 @@ class Admin extends Utility{
 				{ "data": "name" },
 				{ "data": "mobile","orderable":false},
 				{ "data": "email" },
-				{ "data": "address" },
 				{ "data": "type" },
 				{ "data": "action","orderable":false}
 			],
@@ -67,7 +66,11 @@ class Admin extends Utility{
         buttonsStyling: false,
         confirmButtonClass: "btn btn-success",
         type: "success"
-      });
+      }).then((result) => {
+				if (result) {
+					window.location.reload();
+				}
+			});
     }else{
       swal({
         title: "Oops!",

@@ -65,4 +65,13 @@ class Donor extends CI_Model{
     }
   }
 
+  public function getAll($params){
+    if(!empty($params)){
+      foreach($params as $col => $val){
+        $this->db->where($col,$val);
+      }
+    }
+    return $this->db->get("donor")->result();
+  }
+
 }

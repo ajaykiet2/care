@@ -34,6 +34,15 @@ class Ajax extends CI_Controller {
 		]);
 	}
 
+	public function getDonerRegistrationChart(){
+		$data = $this->report->getDonerRegistrationChart();
+		echo json_encode([
+			"status" => true,
+			"message" => "Loaded Successfully",
+			"data" => $data
+		]);
+	}
+
   public function getAdmins(){
     $admins = $this->admin->populate();
     $data = array();
@@ -48,7 +57,6 @@ class Ajax extends CI_Controller {
 			$row["name"] = $admin->name;
 			$row["mobile"] = $admin->mobile;
 			$row["email"] = $admin->email;
-			$row["address"] = $admin->address;
 			$row["type"] = $admin->type;
 			$row["action"] = "<div class='pull-right'>{$actions}</div>";
 			array_push($data, $row);
@@ -107,7 +115,6 @@ class Ajax extends CI_Controller {
       $row["name"] = $donee->name;
       $row["mobile"] = $donee->mobile;
       $row["email"] = $donee->email;
-      $row["address"] = $donee->address;
       $row["status"] = $donee->status;
       $row["action"] = '<div class="pull-right">
 			<a href="'.base_url("/donee/profile/{$doneeToken}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
@@ -199,7 +206,6 @@ class Ajax extends CI_Controller {
       $row["name"] = $donor->name;
       $row["mobile"] = $donor->mobile;
       $row["email"] = $donor->email;
-      $row["address"] = $donor->address;
       $row["status"] = $donor->status;
       $row["action"] = '<div class="pull-right">
 			<a href="'.base_url("admin/profile/").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
@@ -227,7 +233,7 @@ class Ajax extends CI_Controller {
       $row["donor"] = $transaction->donor;
       $row["amount"] = $transaction->amount;	
       $row["status"] = $transaction->status;
-      $row["transaction_date"] = date("d M Y",strtotime($transaction->transaction_date));
+      $row["date"] = date("d M Y h:i A",strtotime($transaction->transaction_date));
       array_push($data, $row);
     }
 

@@ -8,5 +8,6 @@ let router = {
     getDonors: "/admin/ajax/getDonors",
     getRevenueChart: "/admin/ajax/getRevenueChart",
     getAggregationData: "/admin/ajax/getAggregationData",
-    getTransactions: "/admin/ajax/getTransactions"
+    getTransactions: "/admin/ajax/getTransactions",
+    getDonerRegistrationChart: "/admin/ajax/getDonerRegistrationChart"
 };

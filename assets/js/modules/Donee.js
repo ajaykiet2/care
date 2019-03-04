@@ -41,7 +41,6 @@ class Donee extends Utility{
 				{ "data": "name" },
 				{ "data": "mobile" },
 				{ "data": "email" },
-				{ "data": "address" },
 				{ "data": "status" },
 				{ "data": "action", "orderable": false }
 			],
@@ -79,7 +78,11 @@ class Donee extends Utility{
         buttonsStyling: false,
         confirmButtonClass: "btn btn-success",
         type: "success"
-      });
+      }).then((result) => {
+				if (result) {
+					window.location.reload();
+				}
+			});
 		}else{
 			swal({
         title: "Oops!",
@@ -104,23 +107,24 @@ class Donee extends Utility{
 			};
 			self.updateDonee(donee);
 		});
-		
-	}
 
-	static async bindEvents() {
-		let $self = this;
-		// TODO:code for binding events
-		$("#addNewDonee").click(() => {
-			// Collect the donee data to create a new donee
-			//TODO: Create new data 
+		$("#addDonee").click(()=>{
+			let donee = {
+				name : $("#doneeInfo #name").val(),
+				status : $("#doneeInfo #status").val(),
+				mobile : $("#doneeInfo #mobile").val(),
+				email : $("#doneeInfo #email").val(),
+				address : $("#doneeInfo #address").val()
+			};
+			self.addDonee(donee);
 		});
+		
 	}
 
 	// Initialize the module
 	static async init() {
 		let $self = this;
 		$self.loadDonees($("#doneeListing"));
-		$self.bindEvents();
 	}
 
 	static async initAddDonee() {

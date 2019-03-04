@@ -20,7 +20,6 @@
 								<th>Name</th>
 								<th>Mobile</th>
 								<th>Email</th>
-								<th>Address</th>
 								<th>Type</th>
 								<th class="text-right">Action</th>
 							</thead>

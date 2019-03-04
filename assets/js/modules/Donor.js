@@ -38,7 +38,6 @@ class Donor extends Utility{
 				{ "data": "name" },
 				{ "data": "mobile" },
 				{ "data": "email" },
-				{ "data": "address" },
 				{ "data": "status" },
 				{ "data": "action","orderable":false }
 			],

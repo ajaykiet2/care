@@ -16,14 +16,13 @@ class Login extends CI_Controller {
 		}
 	}
 
-	public function login(){
+	public function login(){	
 		$username = $this->input->post("username");
 		$password = $this->input->post("password");
 		if(!isset($_POST['logMeIn'])){
 			$this->load->view('login');
 			return;
 		}
-
 		$credentials = (object)[
 			"username" => $username,
 			"password" => $password

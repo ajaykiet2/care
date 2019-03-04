@@ -21,7 +21,7 @@
       <hr>
       <div class="card-footer ">
         <div class="stats">
-          Our Active Donees
+          Our active donees
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <hr>
       <div class="card-footer ">
         <div class="stats">
-          Customers associated with us
+          Donors associated with us
         </div>
       </div>
     </div>

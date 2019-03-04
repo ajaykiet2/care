@@ -30,4 +30,19 @@ class Transaction extends CI_Model{
     return $this->db->update("transaction", $data);
   }
 
+  public function countTransactions($params){
+    if(!empty($params)){
+      foreach($params as $col => $val){
+        $this->db->where($col,$val);
+      }
+    }
+    return $this->db->get("transaction")->num_rows();
+  }
+
+  public function getRevenue(){
+    $this->db->select("SUM(amount) as revenue")
+      ->where("status","success");
+    return  $this->db->get("transaction")->row()->revenue;
+  }
+
 }

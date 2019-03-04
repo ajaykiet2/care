@@ -1,4 +1,4 @@
-class Report{
+class Report extends Utility{
   static async sendRequest(url,data){
     return await $.ajax({
       url : url,
@@ -10,6 +10,15 @@ class Report{
     });
   }
   static async initDonorRegistrationChart(){
+    Utility.blockUI($("#newDonerRegistration"),true);
+    var response = await this.sendRequest(router.getDonerRegistrationChart,null);
+    var labels = [];
+    var data = [];
+    response.data.forEach((dataRow,idx)=>{
+      labels.push(dataRow.month);
+      data.push(dataRow.count);
+    });
+
     let e = document.getElementById("newDonerRegistration").getContext("2d");
     let gradientFill = e.createLinearGradient(0, 0, 0, 100);
     gradientFill.addColorStop(0, "rgba(255, 0, 0, 1)");
@@ -18,11 +27,11 @@ class Report{
     let a =  {
       type : "bar",
       data : {
-        labels : ["January","February","March","April","May","June","July","August","September","October","November","December"],
+        labels : labels,
         datasets: [{
           label: "New Registrations",
           backgroundColor: gradientFill,
-          data: [80,99,86,96,123,85,100,75,88,90,123,155]
+          data: data
         }]
       },
       options: {
@@ -41,7 +50,9 @@ class Report{
           scales: {
               yAxes: [{
                 gridLines:0,
-                gridLines: { zeroLineColor: "transparent", drawBorder: false }
+                maxTicksLimit:5,
+                gridLines: { zeroLineColor: "transparent", drawBorder: false },
+                ticks:{stepSize :1}
               }],
               xAxes: [{
                 display:true,
@@ -65,9 +76,11 @@ class Report{
         }
       };
       new Chart(e,a);
+      Utility.blockUI($("#newDonerRegistration"),false);
   }
 
   static async initRevenueChart(){
+    Utility.blockUI($("#bigDashboardChart"),true);
     var chartColor = "#FFFFFF";
     var ctx = document.getElementById('bigDashboardChart').getContext("2d");
 
@@ -137,7 +150,7 @@ class Report{
               fontColor: "rgba(255,255,255,1)",
               fontStyle: "bold",
               beginAtZero: true,
-              maxTicksLimit: 5,
+              maxTicksLimit: 10,
               padding: 10
             },
             gridLines: {
@@ -164,12 +177,12 @@ class Report{
         }
       }
     });
+    Utility.blockUI($("#bigDashboardChart"),false);
   }
 
   static numberFormat(num, digits) {
     var si = [
       { value: 1, symbol: "" },
-      { value: 1E3, symbol: "K" },
       { value: 1E6, symbol: "M" },
       { value: 1E9, symbol: "G" },
       { value: 1E12, symbol: "T" },
@@ -188,6 +201,7 @@ class Report{
 
   static async initAggregationData(){
     let $self = this;
+    Utility.blockUI($("body"),true);
     let response = await this.sendRequest(router.getAggregationData,null);
     if(response.status){
       $("#aggregation_donees").text($self.numberFormat(response.data.donees,2));
@@ -195,5 +209,6 @@ class Report{
       $("#aggregation_transactions").text($self.numberFormat(response.data.transactions,2));
       $("#aggregation_revenue").text($self.numberFormat(response.data.total_revenue,2));
     }
+    Utility.blockUI($("body"),false);
   }
 }
