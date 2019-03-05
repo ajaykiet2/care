@@ -25,35 +25,28 @@ class ServiceWorker {
     });
   }
 
-  static async lockApp(){
+  static async lockApp(status){
+    let self = this;
     if(status){
-      this.sendRequest("/admin/ajax/checkActivity", {action:"lockit"})
-      .then(response => {
-        if(response.status){
-          window.location.reload();
-        }
-      });
+      clearInterval(self.runner);
+      let response = await this.sendRequest(router.checkActivity, {action:"lockit"});
+      if(response.status){
+        window.location.reload();
+      }
     }
   }
 
   static async checkLogs(){
     let $self = this;
-    let response = await $self.sendRequest("/admin/ajax/checkActivity",{action:"checkLocker"});
-    if(response.status){
-      $self.lockApp();
-    }
-  }
-
-  static async bindEvents(){
-    let $self = this;
-    setInterval(()=>{
-      $self.checkLogs();
-    }, env.interval);
+    let response = await $self.sendRequest(router.checkActivity,{action:"checkLocker"});
+    $self.lockApp(response.status);
   }
 
   static async init(){
     let $self = this;
-    $self.locked = false;
-    $self.bindEvents();
+    $self.runner = null;
+    $self.runner = setInterval(()=>{
+      $self.checkLogs();
+    }, env.interval);
   }
 }

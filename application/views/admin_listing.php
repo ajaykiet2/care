@@ -21,6 +21,7 @@
 								<th>Mobile</th>
 								<th>Email</th>
 								<th>Type</th>
+								<th>Status</th>
 								<th class="text-right">Action</th>
 							</thead>
 							<tbody></tbody>
@@ -35,11 +36,9 @@
 <?php $this->load->view("common/scripts");?>
 <script src="<?=base_url("assets/js/plugins/jquery.dataTables.min.js");?>"></script>
 <script src="<?=base_url("assets/js/modules/Admin.js");?>"></script>
-<script src="<?=base_url("assets/js/modules/Report.js");?>"></script>
 <script>
 	$(document).ready(()=>{
 		Admin.init();
-		Report.initAggregationData();
 	});
 </script>
 <?php $this->load->view("common/footer");?>

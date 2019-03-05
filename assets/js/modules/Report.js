@@ -35,48 +35,48 @@ class Report extends Utility{
         }]
       },
       options: {
-          maintainAspectRatio: false,
-          legend: { display: false },
-          tooltips: {
-            bodySpacing: 4,
-            mode:"nearest",
-            intersect: 0,
-            position:"nearest",
-            xPadding:10,
-            yPadding:10,
-            caretPadding:10
-          },  
-          responsive: true,
-          scales: {
-              yAxes: [{
-                gridLines:0,
-                maxTicksLimit:5,
-                gridLines: { zeroLineColor: "transparent", drawBorder: false },
-                ticks:{stepSize :1}
-              }],
-              xAxes: [{
-                display:true,
-                gridLines:0,
-                ticks: {
-                  padding: 10,
-                  fontColor: "rgba(100,100,100,1)",
-                  fontStyle: "bold"
-                },
-                gridLines: {
-                  zeroLineColor: "transparent",
-                  drawTicks: false,
-                  display: false,
-                  drawBorder: false
-                }
-              }]
-          },
-          layout:{
-            padding:{left:0,right:0,top:15,bottom:15}
-          }
+        maintainAspectRatio: false,
+        legend: { display: false },
+        tooltips: {
+          bodySpacing: 4,
+          mode:"nearest",
+          intersect: 0,
+          position:"nearest",
+          xPadding:10,
+          yPadding:10,
+          caretPadding:10
+        },  
+        responsive: true,
+        scales: {
+          yAxes: [{
+            gridLines:0,
+            maxTicksLimit:5,
+            gridLines: { zeroLineColor: "transparent", drawBorder: false},
+            ticks:{stepSize :1}
+          }],
+          xAxes: [{
+            display:true,
+            gridLines:0,
+            ticks: {
+              padding: 10,
+              fontColor: "rgba(100,100,100,1)",
+              fontStyle: "bold"
+            },
+            gridLines: {
+              zeroLineColor: "transparent",
+              drawTicks: false,
+              display: false,
+              drawBorder: false
+            }
+          }]
+        },
+        layout:{
+          padding:{left:0,right:0,top:15,bottom:15}
         }
-      };
-      new Chart(e,a);
-      Utility.blockUI($("#newDonerRegistration"),false);
+      }
+    };
+    new Chart(e,a);
+    Utility.blockUI($("#newDonerRegistration"),false);
   }
 
   static async initRevenueChart(){

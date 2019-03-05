@@ -5,10 +5,12 @@ class AdminController extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model(["environment","admin","donee","donor"]);
-		if(!$this->admin->isLoggedIn()){
+		if(!$this->admin->isLoggedIn() || $this->admin->isLocked()){
 			redirect('/', 'refresh');
 			return;
 		}
+		$this->session->set_userdata("last_activity",date("Y-m-d H:i:s"));
+		$this->session->set_userdata("saved_url",base_url(uri_string()));
 	}
 
 	public function index(){
@@ -66,5 +68,12 @@ class AdminController extends CI_Controller {
 		$this->session->set_userdata("active_manu","donees");
 		$donee = $this->donee->get($id);
 		$this->load->view("donee_profile",["donee"=>$donee]);
+	}
+
+	public function donorProfile($token){
+		$id = $this->encryption->decrypt($token);
+		$this->session->set_userdata("active_manu","donors");
+		$donor = $this->donor->get($id);
+		$this->load->view("donor_profile",["donor"=>$donor]);
 	}
 }

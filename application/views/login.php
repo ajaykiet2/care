@@ -21,65 +21,71 @@
         <div class="container">
           <div class="col-md-4 ml-auto mr-auto">
             <form id="loginForm" class="form" method="post" action="/login">
-              <div class="card card-login card-plain">
-                <div class="card-header ">
-                  <div class="logo-container">
-                    <img src="<?=base_url("assets/img/logo.png");?>" alt="">
-                  </div>
+              <div class="card card-user card-plain">
+                <div class="image">
+                  <img src="<?=base_url("assets/img/bg7.jpg");?>" alt="...">
                 </div>
                 <div class="card-body">
-                  <div class="input-group ">
-                    <span class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="now-ui-icons users_circle-08"></i>
-                      </div>
-                    </span>
-                    <input type="text" class="form-control" name="username" placeholder="username" required>
-                  </div>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="now-ui-icons objects_key-25"></i>
-                      </div>
+                  <div class="author">
+                    <a href="#">
+                      <img class="avatar border-gray" src="<?=base_url("assets/img/avatar.png");?>" alt="...">
+                    </a>
+                    <div class="input-group ">
+                      <span class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="now-ui-icons users_circle-08"></i>
+                        </div>
+                      </span>
+                      <input type="text" class="form-control" name="username" placeholder="username" required>
                     </div>
-                    <input type="password" name="password" placeholder="password" class="form-control" required>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="now-ui-icons objects_key-25"></i>
+                        </div>
+                      </div>
+                      <input type="password" name="password" placeholder="password" class="form-control" required>
+                    </div>
+                    <?php if(isset($response)):?>
+                    <h6 class="text-center"><span class="link footer-link text-danger"><?=$response->message;?></span></h6>
+                    <?php endif;?>
                   </div>
-                  <?php if(isset($response)):?>
-                  <h6 class="text-center"><span class="link footer-link text-danger"><?=$response->message;?></span></h6>
-                  <?php endif;?>
-                </div>
-                <div class="card-footer text-center">
-                  <button type="submit" name="logMeIn" class="btn btn-primary btn-round btn-md">LOG ME IN <span class="now-ui-icons arrows-1_minimal-right"></span></button>
-                  <div class="text-center">
-                    <br>
-                    <h6><span id="forgotPasswordBtn" class="link footer-link">Forgot Password ?</span></h6>
+                  <div class="card-footer text-center">
+                    <button type="submit" name="logMeIn" class="btn btn-primary btn-round btn-md">LOG ME IN <span class="now-ui-icons ui-1_lock-circle-open"></span></button>
+                    <div class="text-center">
+                      <br>
+                      <h6><span id="forgotPasswordBtn" class="link footer-link">Forgot Password ?</span></h6>
+                    </div>
                   </div>
                 </div>
               </div>
             </form>
             <div id="resetPasswordForm" class="hide">
-              <div class="card card-login card-plain">
-                <div class="card-header ">
-                  <div class="logo-container">
-                    <img src="<?=base_url("assets/img/logo.png");?>" alt="">
-                  </div>
+              <div class="card card-user card-plain">
+                <div class="image">
+                  <img src="<?=base_url("assets/img/bg2.jpg");?>" alt="...">
                 </div>
                 <div class="card-body">
-                  <div class="input-group">
-                    <span class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="now-ui-icons ui-1_email-85"></i>
-                      </div>
-                    </span>
-                    <input type="text" id="resetInput" class="form-control" placeholder="email id" required>
+                  <div class="author">
+                    <a href="#">
+                      <img class="avatar border-gray" src="<?=base_url("assets/img/avatar.png");?>" alt="...">
+                    </a>
+                    <div class="input-group">
+                      <span class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="now-ui-icons ui-1_email-85"></i>
+                        </div>
+                      </span>
+                      <input type="text" id="resetInput" class="form-control" placeholder="email id" required>
+                    </div>
+                    <h6 id="resetMessage" class="text-center hide"><span class="link footer-link"></span></h6>
                   </div>
-                  <h6 id="resetMessage" class="text-center hide"><span class="link footer-link"></span></h6>
-                </div>
-                <div class="card-footer text-center">
-                  <button id="getResetLink" class="btn btn-primary btn-round btn-md">GET RESET LINK <span class="now-ui-icons arrows-1_minimal-right"></span></button>
-                  <div class="text-center">
-                    <br>
-                    <h6><span id="logMeInBtn" class="link footer-link">Back To Login</span></h6>
+                  <div class="card-footer text-center">
+                    <button id="getResetLink" class="btn btn-primary btn-round btn-md">GET RESET LINK <span class="now-ui-icons arrows-1_minimal-right"></span></button>
+                    <div class="text-center">
+                      <br>
+                      <h6><span id="logMeInBtn" class="link footer-link">Back To Login</span></h6>
+                    </div>
                   </div>
                 </div>
               </div>

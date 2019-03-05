@@ -7,5 +7,8 @@
     </footer>
   </div>
 </div>
+<script> $(document).ready(()=>{
+  ServiceWorker.init();
+});</script>
 </body>
 </html>

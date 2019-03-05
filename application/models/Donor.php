@@ -4,7 +4,7 @@ require_once("Datatable.php");
 class Donor extends CI_Model{
   use Datatable;
   var $table = 'donor';
-  var $column_order = array('name','mobile','email','address','status');
+  var $column_order = array('name','mobile','email','address','status','created_date');
   var $column_search = array('name','mobile','email','address','status');
   var $order = array('name' => 'asc');
 
@@ -14,7 +14,7 @@ class Donor extends CI_Model{
   }
 
   public function get($donor_id){
-    return $this->db->get_where("donor",["donor_id"=>$donor_id])->row();
+    return $this->db->get_where("donor",["id"=>$donor_id])->row();
   }
   public function add($donor){
     $this->db->insert("donor",$donor);
@@ -22,7 +22,7 @@ class Donor extends CI_Model{
   }
 
   public function update($donor_id, $data){
-    $this->db->where("donor_id",$donor_id);
+    $this->db->where("id",$donor_id);
     return $this->db->update("donor",$data);
   }
 

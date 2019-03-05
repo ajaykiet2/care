@@ -22,7 +22,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="now-ui-icons users_single-02"></i>
-              <p><span class=" d-md-block">Ajay Kumar</span></p>
+              <p><span class="d-md-block"><?=$this->environment->adminSession->name;?></span></p>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="#"><i class="now-ui-icons objects_key-25"></i> Change Password</a>

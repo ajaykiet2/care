@@ -6,8 +6,12 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
-            <h5 class="title">Edit Admin Profile</h5>
+					<h4 class="card-title pull-left">EDIT ADMIN PROFILE</h4>
+					<a href="<?=base_url("/admins");?>" class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Back to admin listing" data-placement="left">
+						<i class="now-ui-icons design_bullet-list-67"></i>
+					</a>
         </div>
+        <div class="clearfix"></div>
         <div class="card-body" id="adminInfo">
             <input type="hidden" id="id" value="<?=$this->encryption->encrypt($admin->id)?>">
             <div class="row">
@@ -57,7 +61,7 @@
                   </div>
               </div>
               <div class="col-md-12">
-                <span id="updateAdmin" class="btn btn-primary btn-md btn-round pull-right">Update</span>
+                <span id="updateAdmin" class="btn btn-primary btn-md btn-round pull-right"><i class="now-ui-icons ui-1_check"></i> Update</span>
               </div>
           </div>
         </div>

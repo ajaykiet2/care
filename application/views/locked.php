@@ -11,39 +11,43 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="<?=base_url("assets/css/bootstrap.min.css");?>" rel="stylesheet" />
   <link href="<?=base_url("assets/css/care.css");?>" rel="stylesheet" />
-  <link href="<?=base_url("assets/css/now-ui-dashboard.min69ea.css?v=1.1.2");?>" rel="stylesheet" />
-  <?php $imgNum = mt_rand(1, 7);?>
+  <link href="<?=base_url("assets/css/now-ui-dashboard.min69ea.css?v=1.1.2");?>" rel="stylesheet"/>
 </head>
 <body class="sidebar-mini">
   <div class="wrapper wrapper-full-page ">
-    <div class="full-page login-page section-image" filter-color="black" data-image="<?=base_url("assets/img/bg{$imgNum}.jpg");?>">
+    <div class="full-page login-page section-image" filter-color="black" data-image="<?=base_url("assets/img/banner.jpg");?>">
       <div class="content">
         <div class="container">
           <div class="col-md-4 ml-auto mr-auto">
-            <div class="card card-login card-plain text-center">
-              <div class="card-header">
-                <div class="logo-container">
-                  <img src="../../assets/img/emilyz.jpg" alt="...">
-                </div>
-              </div>
-              <div class="card-body ">
-                <h4 class="card-title">Joe Gardner</h4>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">
-                      <i class="now-ui-icons objects_key-25"></i>
+          <div class="card card-user card-plain">
+            <div class="image">
+              <img src="<?=base_url("assets/img/bg7.jpg");?>" alt="...">
+            </div>
+            <div class="card-body">
+              <form action="<?=base_url("unlock");?>" method="post">
+                <div class="author">
+                    <img class="avatar border-gray" src="<?=base_url("assets/img/avatar.png");?>" alt="...">
+                    <h5 class="title"><?=$this->environment->adminSession->name;?></h5>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="now-ui-icons objects_key-25"></i>
+                      </div>
                     </div>
+                    <input name="password" type="password" placeholder="Enter Password" class="form-control" required>
                   </div>
-                  <input type="password" placeholder="Enter Password" class="form-control" required>
+                  <?php if(isset($response)):?>
+                    <h6 class="text-center"><span class="link footer-link text-danger"><?=$response->message;?></span></h6>
+                  <?php endif;?>
                 </div>
-              </div>
-              <div class="card-footer ">
-                <a href="#pablo" class="btn btn-primary btn-round btn-md">Unlock <i class="now-ui-icons ui-1_lock-circle-open"></i></a>
-                <div class="text-center">
-                  <br>
-                  <h6><a href="<?=base_url("logout");?>" class="link footer-link">Signin as different user</span></h6>
+                <div class="card-footer text-center">
+                  <button type="submit" class="btn btn-primary btn-round btn-md">Unlock <i class="now-ui-icons ui-1_lock-circle-open"></i></button>
+                  <div class="text-center">
+                    <br>
+                    <h6><a href="<?=base_url("logout");?>" class="link footer-link">Signin as different user</span></h6>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -60,7 +64,7 @@
   <?php $this->load->view("common/scripts");?>
   <script src="<?=base_url("assets/js/modules/Login.js");?>"></script>
   <script>
-  $(document).ready(function(){Login.init()});
+    $(document).ready(function(){Login.init()});
   </script>
 </body>
 </html>

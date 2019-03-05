@@ -19,7 +19,8 @@
 								<th>Mobile</th>
 								<th>Email</th>
 								<th>Status</th> 
-								<th>Action</th> 
+								<th>Created At</th> 
+								<th class="text-right">Action</th> 
 							</thead>
 							<tbody></tbody>
 						</table>

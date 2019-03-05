@@ -2,17 +2,17 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ajax extends CI_Controller {
-
 	#Default Constructor
 	public function __construct(){
 		#calling parent controller
 		parent::__construct();
 		$this->load->model(array('admin','donee',"report","donor","transaction"));
-		// $this->load->library(array('sms','user_agent'));
-		#loading other modules
-		#--------------
 		if(!$this->input->is_ajax_request()){
 			exit('Unautherized Access!');
+		}
+		$activityAction = $this->input->post("action");
+		if(empty($activityAction) || !in_array($activityAction,['checkLocker','lockit'])){
+			$this->session->set_userdata("last_activity",date("Y-m-d H:i:s"));
 		}
 	}
 
@@ -49,8 +49,7 @@ class Ajax extends CI_Controller {
     foreach ($admins as $admin) {
 			$token = $this->encryption->encrypt($admin->id);
 			$actions = ($this->session->userdata("adminSession")->type == "super_admin") 
-				? '<a href="'.base_url("admin/profile/{$token}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
-				<button class="btn btn-sm btn-danger btn-round btn-icon" title="Remove Admin"><i class="now-ui-icons ui-1_simple-remove"></i></button>'
+				? '<a href="'.base_url("admin/profile/{$token}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>'
 				:'N/A'; 
 			$row = array();
 			$row["id"] = $admin->id;
@@ -58,6 +57,7 @@ class Ajax extends CI_Controller {
 			$row["mobile"] = $admin->mobile;
 			$row["email"] = $admin->email;
 			$row["type"] = $admin->type;
+			$row["status"] = $admin->status;
 			$row["action"] = "<div class='pull-right'>{$actions}</div>";
 			array_push($data, $row);
     }
@@ -113,12 +113,12 @@ class Ajax extends CI_Controller {
       $row = array();
 			$row["id"] = $donee->id;
       $row["name"] = $donee->name;
+      $row["username"] = $donee->username;
       $row["mobile"] = $donee->mobile;
       $row["email"] = $donee->email;
       $row["status"] = $donee->status;
       $row["action"] = '<div class="pull-right">
-			<a href="'.base_url("/donee/profile/{$doneeToken}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
-			<button class="btn btn-sm btn-danger btn-round btn-icon" title="Remove Admin"><i class="now-ui-icons ui-1_simple-remove"></i></button></div>';
+			<a href="'.base_url("/donee/profile/{$doneeToken}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a></div>';
       array_push($data, $row);
     }
 
@@ -146,7 +146,29 @@ class Ajax extends CI_Controller {
 			]);
 			return;
 		}
-
+		if(strlen($mobile) != 10 || !is_numeric($mobile)){
+			echo json_encode([
+				"status" => false,
+				"message" => "Mobile number is not valid!"
+			]);
+			return;
+		}
+		
+		if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+			echo json_encode([
+				"status" => false,
+				"message" => "Please enter the valid email id!"
+			]);
+			return;
+		}
+		
+		if(strlen($address) < 10){
+			echo json_encode([
+				"status" => false,
+				"message" => "Address must have at least 10 characters!"
+			]);
+			return;
+		}
 		$donee = (object)[
 			"name" => $name,
 			"mobile" => $mobile,
@@ -157,6 +179,13 @@ class Ajax extends CI_Controller {
 		];
 		$response = $this->donee->add($donee);
 		echo json_encode($response);
+	}
+
+	public function checkDoneeUsername(){
+		$username = $this->input->post("username");
+		$response = $this->donee->isUsernameUnique($username);
+		echo json_encode($response);
+		return;
 	}
 
 	public function updateDonee(){
@@ -207,9 +236,9 @@ class Ajax extends CI_Controller {
       $row["mobile"] = $donor->mobile;
       $row["email"] = $donor->email;
       $row["status"] = $donor->status;
+      $row["date"] = date("d M Y h:i A",strtotime($donor->created_date));
       $row["action"] = '<div class="pull-right">
-			<a href="'.base_url("admin/profile/").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a>
-			<button class="btn btn-sm btn-danger btn-round btn-icon" title="Remove Admin"><i class="now-ui-icons ui-1_simple-remove"></i></button></div>';
+			<a href="'.base_url("donor/profile/".$this->encryption->encrypt($donor->id)).'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a></div>';
       array_push($data, $row);
     }
 
@@ -246,33 +275,6 @@ class Ajax extends CI_Controller {
     echo json_encode($output);
 	}
 
-	#TODO: #FIXME: #FIXME: #FIXME: 
-	public function doneeActions(){
-		$action = $this->input->post("action");
-		switch($action){
-			# Checking uniqueness for username of donee
-			case "checkUserName":
-				$username = $this->input->post("username");
-				$response = $this->donee->isUsernameUnique($username);
-				echo json_encode($response);
-				return;
-			break;
-			# Generating Unique donee username
-			case "generateUserName":
-				$name = $this->input->post("name");
-				$response = $this->donee->generateUsername($name);
-				echo json_encode($response);
-				return;
-			break;
-			default:
-			# invalidate action
-			echo json_encode([
-				"status" => false,
-				"message" => "Invalid Action!"
-			]);
-		}
-	}
-
 	public function forgotPassword(){
 		$email = $this->input->post("email");
 		$response = array(
@@ -307,5 +309,44 @@ class Ajax extends CI_Controller {
 			$response = $this->admin->changePasword($token, $password);
 		}
 		echo json_encode($response);
+	}
+
+	public function checkActivity(){
+		$action = $this->input->post("action");
+		switch($action){
+			case "checkLocker":
+				$lastActivity = $this->session->userdata("last_activity");
+				$now = strtotime(date("Y-m-d H:i:s"));
+				$waitTime = round(abs($now - strtotime($lastActivity))/60,2);
+				if($waitTime > 5){
+					echo json_encode([
+						"status" => true,
+						"message" => "System is ideal from long time, Please lock it.",
+						"last_activity" => $this->session->userdata("last_activity"),
+						"now" => date("Y-m-d H:i:s")
+					]);
+				}else{
+					echo json_encode([
+						"status" => false,
+						"message" => "Admin is working on machine.",
+						"last_activity" => $this->session->userdata("last_activity"),
+						"now" => date("Y-m-d H:i:s")
+					]);
+				}
+			break;
+			case "lockit":
+				$currentUrl = base_url(uri_string());
+				$this->session->set_userdata("locked",true);
+				echo json_encode([
+					"status" => true,
+					"message" => "System is locked for security purpose!"
+				]);
+			break;
+			default:
+				echo json_encode([
+					"status" => false,
+					"message" => "Invalid Action"
+				]);
+		}
 	}
 }

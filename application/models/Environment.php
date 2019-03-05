@@ -47,13 +47,6 @@ class Environment extends CI_Model{
 				'status' => 'active',
 				'sub_menus' => array()
 			),
-			// (object) array(
-			// 	'name' => 'Reports',
-			// 	'link' => 'reports',
-			// 	'icon' => 'now-ui-icons files_single-copy-04',
-			// 	'status' => 'active',
-			// 	'sub_menus' => array()
-			// ),
 			(object) array(
 				'name' => 'Admins',
 				'link' => 'admins',

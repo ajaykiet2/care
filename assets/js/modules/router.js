@@ -5,9 +5,12 @@ let router = {
     update_admin: "/admin/ajax/update_admin",
     update_donee: "/admin/ajax/update_donee",
     getDonees: "/admin/ajax/getDonees",
+    addDonee: "/admin/ajax/addDonee",
     getDonors: "/admin/ajax/getDonors",
     getRevenueChart: "/admin/ajax/getRevenueChart",
     getAggregationData: "/admin/ajax/getAggregationData",
     getTransactions: "/admin/ajax/getTransactions",
-    getDonerRegistrationChart: "/admin/ajax/getDonerRegistrationChart"
+    getDonerRegistrationChart: "/admin/ajax/getDonerRegistrationChart",
+    checkDoneeUsername: "/admin/ajax/checkDoneeUsername",
+    checkActivity : "/admin/ajax/checkActivity"
 };

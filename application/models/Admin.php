@@ -5,7 +5,7 @@ class Admin extends CI_Model{
 
   use Datatable;
   var $table = 'admin';
-  var $column_order = array('name','mobile','email','address','type','created_date');
+  var $column_order = array('name','mobile','email','address','type','status','created_date');
   var $column_search = array('name','mobile','email','address');
   var $order = array('name' => 'asc');
 

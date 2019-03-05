@@ -45,7 +45,9 @@ class Login extends CI_Controller {
 		$response = $this->admin->login($credentials);
 		if($response->status){
 			$savedUrl = $this->session->userdata("saved_url");
-			redirect($savedUrl);
+			$this->session->set_userdata("locked",false);
+			$this->session->set_userdata("last_activity",date("Y-m-d H:i:s"));
+			redirect($savedUrl,'refresh');
 		}else{
 			$response->message = "Incorrect Password";
 			$this->load->view("locked",["response" => $response]);

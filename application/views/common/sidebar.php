@@ -16,7 +16,7 @@
             <img src="<?=base_url("assets/img/avatar.png")?>" />
           </div>
           <div class="info">
-            <a href="javascript:return false;"><span>Ajay Kumar</span></a>
+            <a href="javascript:return false;"><span><?=$this->environment->adminSession->name;?></span></a>
             <div class="clearfix"></div>
           </div>
         </div>

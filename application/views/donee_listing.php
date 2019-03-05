@@ -7,7 +7,7 @@
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title pull-left">LIST OF DONEES</h4>
-					<a href="<?=base_url("add_new_donee")?>" class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new donee" data-placement="left">
+					<a href="<?=base_url("new_donee")?>" class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new donee" data-placement="left">
 						<i class="now-ui-icons ui-1_simple-add"></i>
 					</a>
 				</div>
@@ -16,6 +16,7 @@
 						<table class="table table-shopping" id="doneeListing">
 							<thead class="">
 								<th>Name</th>
+								<th>Username</th>
 								<th>Mobile</th>
 								<th>Email</th>
 								<th>Status</th>

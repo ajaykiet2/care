@@ -32,14 +32,16 @@ class Donor extends Utility{
 				"type": "POST",
 			},
       'createdRow': function( row, data, dataIndex ) {
-				$(row).data('id', data.id);
+        $(row).data('id', data.id);
+        if(data.status != 'active') $(row).addClass("text-danger");
 			},
       "columns": [
-				{ "data": "name" },
-				{ "data": "mobile" },
-				{ "data": "email" },
-				{ "data": "status" },
-				{ "data": "action","orderable":false }
+				{ data: "name" },
+				{ data: "mobile" },
+				{ data: "email" },
+        { data: "status" },
+        { data: "date" },
+				{ data: "action","orderable":false }
 			],
       "order": [[0, 'asc']],
 			"language": {
