@@ -88,7 +88,7 @@ class Admin extends CI_Model{
       $settings = $this->config->item('emailSettings');
       $this->load->library('email');
       $this->email->initialize($settings);
-      $this->email->from('ajayratm22@gmail.com', 'Care');
+      $this->email->from('imthecodingmachine@gmail.com', 'Care');
       $this->email->to($email_id);
       $this->email->subject('Password Reset Link');
       $this->email->message($emailContents);

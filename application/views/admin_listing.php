@@ -8,9 +8,9 @@
 				<div class="card-header">
 					<h4 class="card-title pull-left">LIST OF ADMINS</h4>
 					<?php if($this->environment->adminSession->type == "super_admin"):?>
-						<button class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new admin" data-placement="left">
+						<a href="<?=base_url("new_admin");?>" class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new admin" data-placement="left">
 							<i class="now-ui-icons ui-1_simple-add"></i>
-						</button>
+						</a>
 					<?php endif;?>
 				</div>
 				<div class="card-body">

@@ -318,7 +318,7 @@ class Ajax extends CI_Controller {
 				$lastActivity = $this->session->userdata("last_activity");
 				$now = strtotime(date("Y-m-d H:i:s"));
 				$waitTime = round(abs($now - strtotime($lastActivity))/60,2);
-				if($waitTime > 5){
+				if($waitTime > 1){
 					echo json_encode([
 						"status" => true,
 						"message" => "System is ideal from long time, Please lock it.",
@@ -335,7 +335,6 @@ class Ajax extends CI_Controller {
 				}
 			break;
 			case "lockit":
-				$currentUrl = base_url(uri_string());
 				$this->session->set_userdata("locked",true);
 				echo json_encode([
 					"status" => true,

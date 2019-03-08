@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-md-8">
       <div class="card">
-      <div class="card-header">
+        <div class="card-header">
 					<h4 class="card-title pull-left">EDIT DONEE PROFILE</h4>
 					<a href="<?=base_url("/donees");?>" class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Back to donee listing" data-placement="left">
 						<i class="now-ui-icons design_bullet-list-67"></i>

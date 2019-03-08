@@ -51,16 +51,13 @@ class AdminController extends CI_Controller {
 	}
 
 	public function addDonee(){
-		$param_id = $this->input->get("id");
-		# Update Donee Profile
-		if(!empty($param_id)){
-			$donee_id = $this->encryption->decrypt($param_id);
-			$donee = $this->donee->get($donee_id);
-			$this->load->view("new_donee",$donee);
-		}else{
-			# New Profile
-			$this->load->view("new_donee");
-		}
+		$this->load->view("new_donee");
+	}
+	public function addDonor(){
+		$this->load->view("new_donor");
+	}
+	public function addAdmin(){
+		$this->load->view("new_admin");
 	}
 
 	public function doneeProfile($token){

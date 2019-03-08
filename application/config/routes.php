@@ -66,6 +66,8 @@ $route['users'] = "admin/AdminController/users";
 $route['transactions'] = "admin/AdminController/transactions";
 $route['about-us'] = "admin/AdminController/companyProfile";
 $route['new_donee'] = "admin/AdminController/addDonee";
+$route['new_donor'] = "admin/AdminController/addDonor";
+$route['new_admin'] = "admin/AdminController/addAdmin";
 
 #============== Ajax Requests ================
 $route['admin/ajax/getAdmins'] = 'admin/ajax/getAdmins';
