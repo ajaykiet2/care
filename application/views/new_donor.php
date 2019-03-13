@@ -125,12 +125,10 @@
 </div>
 <?php $this->load->view("common/scripts");?>
 <script src="<?=base_url("assets/js/plugins/bootstrap-selectpicker.js")?>"></script>
-<script src="<?=base_url("assets/js/plugins/jquery.validate.min.js")?>"></script>
-<script src="<?=base_url("assets/js/plugins/jquery.bootstrap-wizard.js")?>"></script>
-<script src="<?=base_url("assets/js/modules/Donee.js")?>"></script>
+<script src="<?=base_url("assets/js/modules/Donor.js")?>"></script>
 <script>
 $(document).ready(()=>{
-    Donee.initAddDonee();
+    Donor.initAddDonor();
 });
 </script>
 <?php $this->load->view("common/footer");?>

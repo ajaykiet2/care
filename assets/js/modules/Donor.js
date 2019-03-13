@@ -69,6 +69,9 @@ class Donor extends Utility{
     // code for binding events
   }
 
+  static async initAddDonor(){
+
+  }
   // Initialize the module
   static async init(){
     let $self = this;

@@ -318,7 +318,7 @@ class Ajax extends CI_Controller {
 				$lastActivity = $this->session->userdata("last_activity");
 				$now = strtotime(date("Y-m-d H:i:s"));
 				$waitTime = round(abs($now - strtotime($lastActivity))/60,2);
-				if($waitTime > 30){
+				if($waitTime > 1){
 					echo json_encode([
 						"status" => true,
 						"message" => "System is ideal from long time, Please lock it.",
