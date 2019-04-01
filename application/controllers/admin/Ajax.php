@@ -226,6 +226,7 @@ class Ajax extends CI_Controller {
 			]);
 		}
 	}
+
 	public function getDonors(){
     $donors = $this->donor->populate();
     $data = array();
@@ -235,7 +236,9 @@ class Ajax extends CI_Controller {
       $row["name"] = $donor->name;
       $row["mobile"] = $donor->mobile;
       $row["email"] = $donor->email;
-      $row["status"] = $donor->status;
+      $row["amount"] = $donor->amount;
+      $row["status"] = ucfirst($donor->status);
+      $row["donee"] = $donor->donee_name;
       $row["date"] = date("d M Y h:i A",strtotime($donor->created_date));
       $row["action"] = '<div class="pull-right">
 			<a href="'.base_url("donor/profile/".$this->encryption->encrypt($donor->id)).'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a></div>';
@@ -249,6 +252,35 @@ class Ajax extends CI_Controller {
       "data" => $data,
     );
     echo json_encode($output);
+	}
+
+	public function updateDonor(){
+		$profileFields = ["name","mobile","email","status","pan_number","payment_mode","payment_schedule","purpose","amount","address"];
+		$id = $this->encryption->decrypt($this->input->post("id"));
+		$donor = new stdClass;
+		foreach($profileFields as $param) $donor->$param = $this->input->post($param);
+		$errors = $this->donor->validateData($donor);
+		if(!empty($errors)){
+			echo json_encode([
+				"status" => false,
+				"message" => "Invalid parameters found!",
+				"errors" => $errors
+			]);
+			return;
+		}
+		if($this->donor->update($id, $donor)){
+			echo json_encode([
+				"status" => true,
+				"message" => "Successfully Updated.",
+				"errors" => []
+			]);
+		}else{
+			echo json_encode([
+				"status" => false,
+				"message" => "Unable to update",
+				"errors" => []
+			]);
+		}
 	}
 	
 
@@ -318,7 +350,7 @@ class Ajax extends CI_Controller {
 				$lastActivity = $this->session->userdata("last_activity");
 				$now = strtotime(date("Y-m-d H:i:s"));
 				$waitTime = round(abs($now - strtotime($lastActivity))/60,2);
-				if($waitTime > 1){
+				if($waitTime > 20){
 					echo json_encode([
 						"status" => true,
 						"message" => "System is ideal from long time, Please lock it.",

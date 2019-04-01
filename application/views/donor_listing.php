@@ -7,9 +7,6 @@
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title pull-left">LIST OF DONORS</h4>
-					<a href="<?=base_url("new_donor");?>" class="btn btn-primary btn-round btn-icon pull-right" rel="tooltip" data-original-title="Add new donor" data-placement="left">
-              			<i class="now-ui-icons ui-1_simple-add"></i>
-					</a>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -18,9 +15,11 @@
 								<th>Name</th>
 								<th>Mobile</th>
 								<th>Email</th>
+								<th>Amount</th>
 								<th>Status</th> 
+								<th>Added By</th> 
 								<th>Created At</th> 
-								<th class="text-right">Action</th> 
+								<th class="text-right">Profile</th> 
 							</thead>
 							<tbody></tbody>
 						</table>

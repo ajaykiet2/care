@@ -23,7 +23,7 @@ class Donee extends CI_Model{
 
   #Getting raw Password
   private function _getPassword($username){
-    $this->db->select("password")
+    $this->db->select("password") 
       ->from("donee")
       ->where("username",$username)
       ->where("status",'active');
@@ -35,7 +35,7 @@ class Donee extends CI_Model{
     if(empty($credeitial->username) || empty($credeitial->password)) return false;
     $donee = $this->_getPassword($credeitial->username);
     if(empty($donee)) return false;
-    $password = $this->encrypt->decode($donee->password);
+    $password = $this->encryption->decrypt($donee->password);
     return $password == $credeitial->password;
   }
 

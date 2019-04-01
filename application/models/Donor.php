@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once("Datatable.php");
 class Donor extends CI_Model{
   use Datatable;
-  var $table = 'donor';
-  var $column_order = array('name','mobile','email','address','status','created_date');
-  var $column_search = array('name','mobile','email','address','status');
+  var $table = '(SELECT donor.*,donee.name as donee_name FROM donor INNER JOIN donee ON donor.added_by = donee.id) tempTable';
+  var $column_order = array('name','mobile','email','amount','status','donee_name','created_date');
+  var $column_search = array('name','mobile','email',"donee_name");
   var $order = array('name' => 'asc');
 
   public function __construct(){
@@ -74,4 +74,20 @@ class Donor extends CI_Model{
     return $this->db->get("donor")->result();
   }
 
+  public function validateData($donor){
+    $errors = [];
+    if($donor->name == "" || strlen($donor->name) < 3 || strlen($donor->name) > 20)
+      array_push($errors,"Name must be valid! Ex. not empty, min length 3, max length 20");
+    if($donor->mobile == "" || strlen($donor->mobile) != 10 || !is_numeric($donor->mobile))
+      array_push($errors,"Mobile number is not valid!");
+    if($donor->email == "" || !filter_var($donor->email, FILTER_VALIDATE_EMAIL))
+      array_push($errors,"Invalid email id!");
+    if($donor->pan_number == "" || strlen($donor->pan_number) != 10)
+      array_push($errors,"PAN number is not valid!");
+    if(!is_numeric($donor->amount)) 
+      array_push($errors,"Amount is not valid!");
+    if(strlen($donor->address) < 10) 
+      array_push($errors,"Invalid address found!");
+    return $errors;
+  }
 }

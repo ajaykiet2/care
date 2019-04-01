@@ -11,9 +11,7 @@ class Donor extends Utility{
       data,
       type:"post",
       dataType: "json",
-      success:(response)=>{
-        return response;
-      },
+      success:(response)=>{ return response; },
       error: ()=>{
         return {status:false,message:"Unable to connect server!"};
       }
@@ -33,13 +31,16 @@ class Donor extends Utility{
 			},
       'createdRow': function( row, data, dataIndex ) {
         $(row).data('id', data.id);
-        if(data.status != 'active') $(row).addClass("text-danger");
+        let rowClass = (data.status != 'Active') ? "text-danger" : "";
+        $(row).addClass(rowClass);
 			},
       "columns": [
 				{ data: "name" },
 				{ data: "mobile" },
 				{ data: "email" },
+				{ data: "amount" },
         { data: "status" },
+        { data: "donee" },
         { data: "date" },
 				{ data: "action","orderable":false }
 			],
@@ -59,23 +60,46 @@ class Donor extends Utility{
     });
   }
 
-  static async addDonor(donor){
-    let $self = this;
-    return await $self.sendRequest(window.env.adminUri,donor);
+  static async updateDonor(donor){
+    let self = this;
+    let response = await self.sendRequest(router.update_donor,donor);
+    if(!response.status){
+      let errors = [];
+      if(response.errors.length)
+        errors = response.errors.map(error=>{ return $("<div>").text(error);});
+      else
+        errors.push(response.message);
+      $("#error").empty().append(errors).removeClass("hide");
+      setTimeout(() => { $("#error").empty().addClass("hide"); },5000);
+    }else{
+      swal({
+        title: "Success!",
+        html: response.message,
+        buttonsStyling: false,
+        confirmButtonClass: "btn btn-success",
+        type: "success"
+      }).then((result)=>{
+        if (result){
+          window.location.reload();
+        }
+      });
+    }
   }
 
-  static async bindEvents(){
-    let $self = this;
-    // code for binding events
-  }
-
-  static async initAddDonor(){
-
-  }
   // Initialize the module
   static async init(){
     let $self = this;
     $self.loadDonors($("#donorListing"));
-    $self.bindEvents();
+  }
+
+  static async initProfile(){
+    let self = this;
+    let fields = ["id","name","mobile","email","status","pan_number","payment_mode","payment_schedule","purpose","amount","address"];
+    $("#resetProfile").click(()=>{ window.location.reload()});
+    $("#updateProfile").click(()=>{ 
+      let donor = {};
+      fields.map(field => {donor[field] = $("#"+field).val()});
+      self.updateDonor(donor);
+    });
   }
 }

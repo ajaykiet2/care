@@ -89,12 +89,6 @@ class Admin extends Utility{
     return await self.sendRequest(window.env.adminUri,admin);
   }
 
-  static async bindEvents(){
-    let self = this;
-    // code for binding events
-    
-  }
-  
   static async initProfile(){
     let self = this;
     $("#updateAdmin").click(()=>{

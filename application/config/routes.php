@@ -66,7 +66,6 @@ $route['users'] = "admin/AdminController/users";
 $route['transactions'] = "admin/AdminController/transactions";
 $route['about-us'] = "admin/AdminController/companyProfile";
 $route['new_donee'] = "admin/AdminController/addDonee";
-$route['new_donor'] = "admin/AdminController/addDonor";
 $route['new_admin'] = "admin/AdminController/addAdmin";
 
 #============== Ajax Requests ================
@@ -83,6 +82,7 @@ $route['admin/ajax/forgotPassword'] = 'admin/ajax/forgotPassword';
 $route['admin/ajax/resetPassword'] = 'admin/ajax/resetPassword';
 $route['admin/ajax/update_admin'] = 'admin/ajax/updateAdmin';
 $route['admin/ajax/update_donee'] = 'admin/ajax/updateDonee';
+$route['admin/ajax/update_donor'] = 'admin/ajax/updateDonor';
 $route['admin/ajax/checkActivity'] = 'admin/ajax/checkActivity';
 
 #============== API Requests ===================

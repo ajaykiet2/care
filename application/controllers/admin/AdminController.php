@@ -53,9 +53,7 @@ class AdminController extends CI_Controller {
 	public function addDonee(){
 		$this->load->view("new_donee");
 	}
-	public function addDonor(){
-		$this->load->view("new_donor");
-	}
+	
 	public function addAdmin(){
 		$this->load->view("new_admin");
 	}
