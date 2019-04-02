@@ -16,4 +16,40 @@
   <link href="<?=base_url("assets/font_awesome/css/font-awesome.min.css");?>" rel="stylesheet" >
   <script src="<?=base_url("assets/js/modules/router.js")?>"></script>
   <script>window.base_url = '<?=base_url();?>';</script>
+  <style type="text/css">
+  .loader-overlay {
+    background:#ffffffd2;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    position:fixed;
+    z-index:9999999;
+  }
+  .loader {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid #f77e0d;
+    border-radius: 50%;
+    border-top: 4px solid #ffd903;
+    border-bottom: 4px solid #ffd903;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+  }
+
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  </style>
 </head>

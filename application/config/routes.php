@@ -89,6 +89,7 @@ $route['admin/ajax/checkActivity'] = 'admin/ajax/checkActivity';
 $route['api/login']["post"] = 'api/api/login';
 $route['api/requestOTP']["post"] = 'api/api/requestOTP';
 $route['api/addDonor']["post"] = 'api/api/addDonor';
+$route['api/createTransaction']['post'] = 'api/api/createTransaction';
 $route['api/completeTransaction']['post'] = 'api/api/completeTransaction';
 
 

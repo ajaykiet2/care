@@ -15,10 +15,13 @@
 					<div class="table-responsive">
 						<table class="table table-shopping" id="transactionListing">
 							<thead class="">
-								<th>ID</th>
+								<th><i class="fa fa-plus"></i></th>
+								<th>TRANSACTION ID</th>
 								<th>Donee</th>
 								<th>Donor</th>
 								<th>Amount</th>
+								<th>Payment Type</th>
+								<th>Payment Mode</th>
 								<th>Status</th> 
 								<th>Date</th>
 							</thead>

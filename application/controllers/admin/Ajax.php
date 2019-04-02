@@ -118,7 +118,7 @@ class Ajax extends CI_Controller {
       $row["email"] = $donee->email;
       $row["status"] = $donee->status;
       $row["action"] = '<div class="pull-right">
-			<a href="'.base_url("/donee/profile/{$doneeToken}").'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a></div>';
+			<a href="'.base_url("/donee/profile/{$doneeToken}").'"title="View Profile">View Profile <i class="now-ui-icons arrows-1_minimal-right"></i></a></div>';
       array_push($data, $row);
     }
 
@@ -241,7 +241,7 @@ class Ajax extends CI_Controller {
       $row["donee"] = $donor->donee_name;
       $row["date"] = date("d M Y h:i A",strtotime($donor->created_date));
       $row["action"] = '<div class="pull-right">
-			<a href="'.base_url("donor/profile/".$this->encryption->encrypt($donor->id)).'" class="btn btn-sm btn-facebook btn-round btn-icon" title="View Profile"><i class="now-ui-icons users_circle-08"></i></a></div>';
+			<a href="'.base_url("donor/profile/".$this->encryption->encrypt($donor->id)).'" title="View Profile">View Profile <i class="now-ui-icons arrows-1_minimal-right"></i></a></div>';
       array_push($data, $row);
     }
 
@@ -293,6 +293,8 @@ class Ajax extends CI_Controller {
       $row["donee"] = $transaction->donee;
       $row["donor"] = $transaction->donor;
       $row["amount"] = $transaction->amount;	
+      $row["payment_type"] = !empty($transaction->payment_type) ? $transaction->payment_type : "N/A";	
+      $row["payment_mode"] = !empty($transaction->payment_mode) ? $transaction->payment_mode : "N/A";	
       $row["status"] = $transaction->status;
       $row["date"] = date("d M Y h:i A",strtotime($transaction->transaction_date));
       array_push($data, $row);

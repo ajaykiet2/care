@@ -19,7 +19,7 @@ class Transaction extends Utility{
   static async loadTransactions($target){
     let self = this;
     self.blockUI($target,true);
-    return await $target.DataTable({
+    self.table = await $target.DataTable({
       "serverSide": true,
 			"iDisplayLength": 10,
 			"searching": true,
@@ -31,14 +31,22 @@ class Transaction extends Utility{
 				$(row).data('id', data.id);
 			},
       "columns": [
+        {
+          "className": 'details-control',
+          "orderable": false,
+          "data": "details",
+          "defaultContent": ''
+        },
 				{ "data": "id" },
 				{ "data": "donee" },
 				{ "data": "donor" },
 				{ "data": "amount" },
+				{ "data": "payment_type" },
+				{ "data": "payment_mode" },
 				{ "data": "status" },
 				{ "data": "date" }
 			],
-      "order": [[5, 'desc']],
+      "order": [[7, 'desc']],
 			"language": {
 				"paginate": {
 				  "previous": "<i class='now-ui-icons arrows-1_minimal-left'></i>",
@@ -52,7 +60,9 @@ class Transaction extends Utility{
         await self.blockUI($target,false);
       }
     });
+    return transactionTable;
   }
+  
 
   // initialize the events
   static async initEvents(){
@@ -63,6 +73,7 @@ class Transaction extends Utility{
   static async init(){
     // holding the current object
     let $self = this;
+    self.table = null;
     await $self.loadTransactions($("#transactionListing"));
     $self.initEvents();
   }

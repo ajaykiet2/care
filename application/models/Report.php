@@ -12,22 +12,23 @@ class Report extends CI_Model{
     FROM transaction 
     WHERE status = 'success' 
     GROUP BY date_format(DATE(transaction_date),'%Y-%m') 
-    ORDER BY date_format(DATE(transaction_date),'%Y-%m') ASC LIMIT 12";
+    ORDER BY date_format(DATE(transaction_date),'%Y-%m') DESC LIMIT 12";
     $txns = $this->db->query($sql)->result();
-    $start = strtotime(date("Y-m"));
-    $end = strtotime(date("Y-m")." - 11 months");
+    $end = strtotime(date("Y-m"));
+    $start = strtotime(date("Y-m")." -11 months");
     $resultIndex = 0;
     $result = [];
-    while($end <= $start){
-      if($end == strtotime($txns[$resultIndex]->month)){
-        $month = date("M Y",strtotime($txns[$resultIndex]->month));
-        array_push($result,["month" => $month, "revenue" => $txns[$resultIndex]->revenue]);
+    while($end >= $start){
+      $month = date("M Y",$end);
+      if(!isset($txns[$resultIndex])){
+        array_unshift($result,["month" => $month, "revenue" => 0]);
+      }elseif($end == strtotime($txns[$resultIndex]->month)){
+        array_unshift($result,["month" => $month, "revenue" => $txns[$resultIndex]->revenue]);
         $resultIndex++;
       }else{
-        $month = date("M Y",$end);
-        array_push($result,["month" => $month, "revenue" => 0]);
+        array_unshift($result,["month" => $month, "revenue" => 0]);
       }
-      $end = strtotime(date("Y-m",$end)." + 1 month");
+      $end = strtotime(date("Y-m",$end)." -1 month");
     }
     return $result;
   }

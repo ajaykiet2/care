@@ -25,8 +25,6 @@
               <p><span class="d-md-block"><?=$this->environment->adminSession->name;?></span></p>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#"><i class="now-ui-icons objects_key-25"></i> Change Password</a>
-              <a class="dropdown-item" href="#"><i class="now-ui-icons ui-2_settings-90"></i> My Account</a>
               <a class="dropdown-item" href="<?=base_url("logout");?>"><i class="now-ui-icons media-1_button-power"></i> Logout</a>
             </div>
           </li>
