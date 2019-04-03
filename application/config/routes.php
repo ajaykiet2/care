@@ -74,6 +74,7 @@ $route['admin/ajax/getDonees'] = 'admin/ajax/getDonees';
 $route['admin/ajax/addDonee'] = 'admin/ajax/addDonee';
 $route['admin/ajax/getDonors'] = 'admin/ajax/getDonors';
 $route['admin/ajax/getTransactions'] = 'admin/ajax/getTransactions';
+$route['admin/ajax/loadTransaction'] = 'admin/ajax/loadTransaction';
 $route['admin/ajax/doneeActions'] = "admin/ajax/doneeActions";
 $route['admin/ajax/getRevenueChart'] = 'admin/ajax/getRevenueChartData';
 $route['admin/ajax/getAggregationData'] = 'admin/ajax/getAggregationData';

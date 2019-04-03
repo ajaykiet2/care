@@ -331,6 +331,33 @@ class Ajax extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function loadTransaction(){
+		$txn_id = $this->input->post("txn_id");
+		$transaction = $this->transaction->get($txn_id);
+		if(!empty($transaction)){
+			//modify data
+			$donor = $this->donor->get($transaction->donor_id);
+			$donee = $this->donee->get($transaction->donee_id);
+			unset($transaction->donor_id);
+			unset($transaction->donee_id);
+			$transaction->donor = $donor->name;
+			$transaction->donee = $donee->name;
+
+			echo json_encode([
+				"status" => true,
+				"message" => "Transaction loadded successfully.",
+				"transaction" => $transaction
+			]);
+		}else{
+			echo json_encode([
+				"status" => false,
+				"message" => "Unable to load transaction!",
+				"transaction" => null
+			]);
+		}
+		
+	}
+
 	public function resetPassword(){
 		$token = $this->input->post("token");
 		$password = $this->input->post("password");

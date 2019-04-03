@@ -26,14 +26,7 @@ class Api extends REST_Controller {
 		$response 	= (object)["status" => false,"otp" => "","message" => "Unable to send OTP"];
 		$request 	= json_decode($this->input->raw_input_stream);
 		$mobile 	= $request->mobile;
-		$email 		= $request->email;
-
-		$response 	= $this->donor->isExists($mobile, $email);
-		if($response->status){
-			$response = $this->donor->sendOTP($mobile);
-		}else{
-			$response->otp = "";
-		}
+		$response = $this->donor->sendOTP($mobile);
 		$this->response($response, REST_Controller::HTTP_OK);
 	}
 
@@ -42,15 +35,7 @@ class Api extends REST_Controller {
 
 		// Prepare default response
 		$response = (object)["status" => false,"message" => "Unable to add donor","donor" => (object)[]];
-
-		// Check if already exists
-		$existance = $this->donor->isExists($request->mobile, $request->email);
-		if(!$existance->status){
-			$response->message = $existance->message;
-			$this->response($response, REST_Controller::HTTP_OK);
-			return;
-		}
-
+		
 		// Lets create donor account
 		$donor = array(
 			"name"				=> $request->name,
@@ -66,7 +51,17 @@ class Api extends REST_Controller {
 			"status" 			=> "active",
  			"created_date" 		=> date("Y-m-d H:i:s")
 		);
-		$donor_id = $this->donor->add($donor);
+
+		// Check if already exists
+		$donor_id = null;
+		$existance = $this->donor->isExists($request->mobile, $request->email);
+		if(!$existance->status){
+			$donor_id = $existance->donor_id;
+			$this->donor->update($donor_id, $donor);
+		}else{
+			$donor_id = $this->donor->add($donor);
+		}		
+		
 		if($donor_id){
 			$donor = $this->donor->get($donor_id);
 			$response = (object)[

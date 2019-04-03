@@ -11,6 +11,7 @@ let router = {
     getRevenueChart: "/admin/ajax/getRevenueChart",
     getAggregationData: "/admin/ajax/getAggregationData",
     getTransactions: "/admin/ajax/getTransactions",
+    loadTransaction: "/admin/ajax/loadTransaction",
     getDonerRegistrationChart: "/admin/ajax/getDonerRegistrationChart",
     checkDoneeUsername: "/admin/ajax/checkDoneeUsername",
     checkActivity : "/admin/ajax/checkActivity"

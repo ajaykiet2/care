@@ -27,18 +27,14 @@ class Donor extends CI_Model{
   }
 
   public function isExists($mobile, $email){
-    $donorMobile = $this->db->get_where("donor", ["mobile" => $mobile])->row();
-    if(!empty($donorMobile)){
+    $this->db->where("mobile",$mobile)
+      ->or_where("email",$email);
+    $donor = $this->db->get("donor")->row();
+    if(!empty($donor)){
       return (object)[
         "status" => false,
-        "message" => "Mobile number is already exists"
-      ];
-    }
-    $donorEmail = $this->db->get_where("donor", ["email" => $email])->row();
-    if(!empty($donorEmail)){
-      return (object)[
-        "status" => false,
-        "message" => "Email ID is already exists"
+        "message" => "Donor is already exists",
+        "donor_id" => $donor->id
       ];
     }
     return (object)[
